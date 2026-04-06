@@ -2,7 +2,7 @@
   <h1 align="center">Claude LinkedIn Automation</h1>
   <p align="center">
     Autonomous LinkedIn management, validated in production.<br>
-    22 days. 10 tasks. Zero detection.
+    27+ days. 10 tasks. Zero detection. 3.9% engagement rate.
   </p>
 </p>
 
@@ -16,13 +16,14 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-3.1.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/version-3.2.0-blue" alt="Version">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   <img src="https://img.shields.io/badge/Claude_Code-skill-8A2BE2" alt="Claude Code Skill">
   <img src="https://img.shields.io/badge/Cowork-compatible-orange" alt="Cowork Compatible">
   <img src="https://img.shields.io/badge/Cursor-compatible-teal" alt="Cursor Compatible">
   <img src="https://img.shields.io/badge/Windsurf-compatible-cyan" alt="Windsurf Compatible">
   <img src="https://img.shields.io/badge/detection_incidents-0-brightgreen" alt="Zero Detection">
+  <img src="https://img.shields.io/badge/engagement_rate-3.9%25-blue" alt="3.9% Engagement Rate">
 </p>
 
 <p align="center">
@@ -39,7 +40,7 @@
 
 A **custom skill for Claude** that turns your AI assistant into a full-stack LinkedIn manager. It posts daily, engages with your network, triages DMs, audits itself for detection risk, and reports weekly — all autonomously.
 
-Every rule is extracted from **22 days of real production data** on a live Italian profile. Not theory. Not best guesses. Empirical evidence from daily audits, scored engagement sessions, and 3 documented incidents that shaped the system.
+Every rule is extracted from **27+ days of real production data** on a live Italian profile. Not theory. Not best guesses. Empirical evidence from daily audits, scored engagement sessions, and documented incidents that shaped the system.
 
 > **Works in any language.** The wizard was battle-tested in Italian, but the system is language-agnostic. Phase 1 captures your identity, voice, and vocabulary in whatever language you operate in — Claude generates all content in your language. The architecture (pillar calendar, anti-detection rules, NDI scoring, task scheduling) is universal.
 
@@ -95,12 +96,13 @@ After installing, type `/linkedin` in any Claude session to start.
 ```
 claude-linkedin-automation/
 ├── SKILL.md                              # The skill itself (5-phase wizard)
+├── HUMAN-VOICE-LAYER.md                  # Anti-detection Level 2: structural naturalness
 ├── install.sh                            # Interactive installer
 ├── modules/
 │   └── linkedin.md                       # Full module config (560 lines)
 ├── references/
 │   ├── tov-framework.md                  # Voice: 10 rhetorical patterns, vocabulary, registers
-│   ├── anti-detection-playbook.md        # 7 rules, NDI formula, escalation matrix
+│   ├── anti-detection-playbook.md        # 7 rules (L1) + Level 2 structural tells, NDI formula
 │   ├── content-templates.md              # Day-by-day templates with worked examples
 │   ├── epistemic-verification.md         # 7-checkpoint fact verification gate
 │   └── task-catalog.md                   # Full prompt templates for all 10 tasks
@@ -134,21 +136,25 @@ claude-linkedin-automation/
 
 <h2 id="results">Results</h2>
 
-### 22 Days of Production (G0-G22, March 3-24, 2026)
+### 27+ Days of Production (April 6, 2026)
 
 | Metric | Value |
 |--------|-------|
-| Duration | 22 days of daily operation |
+| Duration | 27+ days of daily operation |
 | Scheduled tasks | 10 (9 active + 1 disabled) |
-| Follower growth | 45 → 55 (+22%) |
+| Follower growth | 45 → 55+ |
 | Posts published | 7/week, zero missed |
 | Engagement sessions | Daily, 25 min each |
-| AI detection incidents | **0** |
-| L1 proof events | 13 named interactions |
+| **AI detection incidents** | **0** |
+| Avg engagement rate | **3.9%** |
+| L1 proof events | 13+ named interactions |
 | Avg engagement score | 8.0/10 |
 | Non-Detection Index | 5.0+ avg |
+| **First product sale** | **Via LinkedIn funnel (April 4, 2026)** |
 
 Professionals replied by name, sent multi-message DMs, mentioned the profile in their own posts, and sent connection requests — all without suspecting automation.
+
+**Key milestone:** On April 4, 2026, the system completed a full attribution cycle: LinkedIn post → site visit → purchase of a digital product. The funnel worked without any manual intervention.
 
 ### Growth Charts
 
@@ -173,7 +179,9 @@ Professionals replied by name, sent multi-message DMs, mentioned the profile in 
 
 <h2 id="anti-detection">Anti-Detection</h2>
 
-### 7 Rules (empirically validated)
+The system uses a **two-level anti-detection architecture**.
+
+### Level 1: Behavioral Rules (7 rules, empirically validated)
 
 | # | Rule | Why |
 |---|------|-----|
@@ -184,6 +192,35 @@ Professionals replied by name, sent multi-message DMs, mentioned the profile in 
 | 5 | **Like-only on agreements**: don't extend agreement threads | Extending sounds artificial |
 | 6 | **Fact-check before asserting**: verify or rephrase as question | Profile-B incident, Day 22 |
 | 7 | **High-traffic targeting**: 1+ comment on posts with 200+ reactions | 7-12x reach multiplier |
+
+### Level 2: Structural Naturalness (Human Voice Layer)
+
+Level 1 prevents algorithmic flags. Level 2 addresses a subtler problem: **pattern recognition by expert human readers**. Even with perfect vocabulary and timing, certain structural tells betray AI authorship to the professionals who matter most.
+
+The 7 structural tells that L1 doesn't cover:
+
+| Tell | Pattern | Fix |
+|------|---------|-----|
+| **Simmetria strutturale** | Every post: Hook → Body (3 blocks) → Closing | Rotate among 6+ structures, max 2/week same structure |
+| **Parallelismo sintattico** | Lists with identical grammatical structure | Break symmetry deliberately: 1 element must differ |
+| **Informalità ingegnerizzata** | Informal markers placed at strategic positions | Informality must emerge from structure, not be inserted |
+| **Zero imperfezioni** | No interrupted thoughts, no digressions | Inject 1 genuine flow-break per post |
+| **Case study cinematografici** | Perfect setup-payoff arcs with clean quotes | Add dirty details: vague memory + hyper-specific detail |
+| **Arco emotivo prevedibile** | Every post: tension → resolution | 1 post/week with no resolution, ending in open question |
+| **Registro emotivo mappato** | Wednesday = indignation (constructed, not reactive) | Emotional posts need a real, nameable trigger |
+
+**6 alternative post structures** are defined in [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md): Stream of Consciousness, Question Without Answer, Start From the Middle, Broken List, Micro-post, Response to Something.
+
+**Pre-publication checklist** (5/7 required to publish):
+- [ ] Different structure from yesterday and the day before?
+- [ ] No perfect parallelism in lists? (at least 1 asymmetric element)
+- [ ] At least 1 genuine flow break? (not an inserted marker, a real interruption)
+- [ ] Numbers are not all round? (not 85→9, but 85→11 or "something like 80-90 mins")
+- [ ] Case study has dirty details? (vague memory + specific detail)
+- [ ] Emotional arc is not always positive? (at least 1 unresolved post/week)
+- [ ] Could this post have been written by a human in 5 minutes?
+
+Full methodology: [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md)
 
 ### Non-Detection Index (NDI)
 
@@ -242,6 +279,7 @@ Full methodology: [`references/anti-detection-playbook.md`](references/anti-dete
 
 | File | When to read |
 |------|-------------|
+| [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md) | Anti-detection Level 2: structural naturalness, 6 post structures, noise injection rules |
 | [`references/tov-framework.md`](references/tov-framework.md) | Setting up voice, vocabulary, emotional registers |
 | [`references/anti-detection-playbook.md`](references/anti-detection-playbook.md) | Configuring engagement rules, NDI scoring |
 | [`references/content-templates.md`](references/content-templates.md) | Creating weekly post plans with day-by-day templates |
@@ -291,6 +329,9 @@ No. The wizard and examples are in Italian (the production language), but the sy
 **Does this only work for the AI/automation niche?**
 No. The architecture (pillar calendar, anti-detection, NDI, verification gate) is niche-agnostic. See [Niche Adaptation](#niche-adaptation) for examples.
 
+**What is the Human Voice Layer?**
+It's a Level 2 anti-detection framework added after 22 days of operation. Level 1 prevents algorithmic detection. Level 2 addresses structural patterns that reveal AI authorship to expert human readers — even when vocabulary and timing are correct. See [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md).
+
 ---
 
 ## Who Built This
@@ -307,13 +348,17 @@ I transform manual processes into automated ecosystems for Italian SMBs and free
 
 Can a well-instructed LLM manage a professional LinkedIn profile without being identified as non-human?
 
-After 22 days of daily operation:
+After 27+ days of daily operation:
 - **Zero** detection incidents
-- **13** L1 proof events (named conversations with professionals)
+- **13+** L1 proof events (named conversations with professionals)
 - **8.0/10** average engagement quality
+- **3.9%** average engagement rate
 - **5.0+** NDI (Non-Detection Index) consistently
+- **1 product sale** attributed directly to the LinkedIn funnel (April 4, 2026)
 
 The system works because it treats **identity and anti-detection as the same thing**. A profile with a clear, consistent, humanized voice is inherently less likely to be flagged. It's also more likely to convert.
+
+The Level 2 (Human Voice Layer) extends this principle: structural naturalness — varied post formats, asymmetric lists, dirty case study details, unresolved emotional arcs — builds the kind of trust that drives DMs, connection requests, and ultimately sales.
 
 ---
 

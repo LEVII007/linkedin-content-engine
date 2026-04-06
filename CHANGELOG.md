@@ -4,6 +4,28 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). Versioning: [S
 
 ---
 
+## [3.2.0] - 2026-04-06
+
+### Added
+
+- **HUMAN-VOICE-LAYER.md** — Anti-detection Level 2: structural naturalness framework. Level 1 prevents algorithmic detection. Level 2 addresses structural patterns that reveal AI authorship to expert human readers. Includes: 7 structural tells, 6 alternative post structures (Stream of Consciousness, Question Without Answer, Start From the Middle, Broken List, Micro-post, Response to Something), Noise Injection rules, pre-publication Human Voice Checklist (5/7 minimum), Before/After examples on real posts.
+
+- **README: Level 2 anti-detection section** — New section documenting the dual-layer architecture with a summary of the 7 structural tells and the 6 alternative structures.
+
+- **README: Engagement rate badge** — Added `3.9%` engagement rate badge to header.
+
+- **README: First product sale milestone** — April 4, 2026: full attribution cycle completed (LinkedIn post → site → purchase) without manual intervention.
+
+### Changed
+
+- Version bumped to 3.2.0
+- Production data updated: 22 days → 27+ days
+- Engagement rate added: 3.9%
+- Reference Files table updated to include HUMAN-VOICE-LAYER.md
+- FAQ: added entry on Human Voice Layer
+
+---
+
 ## [3.1.0] - 2026-03-25
 
 ### Added

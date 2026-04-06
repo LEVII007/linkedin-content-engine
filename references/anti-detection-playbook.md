@@ -12,6 +12,8 @@ Operating an LLM-managed LinkedIn profile undetected requires systematic rules g
 
 ---
 
+> **Two-Level Architecture:** This playbook covers **Level 1** — behavioral rules validated across 22+ engagement sessions (comment structure, tool mentions, timing jitter, NDI). For **Level 2** — structural naturalness patterns that betray AI authorship to expert human readers — see [`HUMAN-VOICE-LAYER.md`](../HUMAN-VOICE-LAYER.md). Level 1 prevents algorithmic detection. Level 2 builds trust with the professionals who matter.
+
 ## DETECTION VECTORS — PRIORITIZED BY IMPACT
 
 ### 1. Post Length Uniformity (HIGHEST RISK — immediate flagging)

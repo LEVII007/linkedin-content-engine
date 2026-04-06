@@ -5,8 +5,8 @@
 **Domain:** Social Media Management
 **Tasks Covered:** 10 scheduled automations
 **Follower Range:** 0-1000+ (adaptive rules)
-**Detection Risk:** Minimal (tested 22 days, 0 incidents)
-**Last Updated:** March 2026
+**Detection Risk:** Minimal (tested 27+ days, 0 incidents)
+**Last Updated:** April 2026
 
 ---
 
