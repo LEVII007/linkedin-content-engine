@@ -14,3 +14,8 @@ Thumbs.db
 
 # Workspace
 *-workspace/
+
+# secrets — token lives in the macOS keychain, never on disk
+.env
+*.token
+*.secret

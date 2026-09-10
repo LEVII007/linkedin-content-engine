@@ -1,108 +1,65 @@
 # Changelog
 
-Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## 1.0.0 — 2026-09-10 — Synthio fork
 
----
+Forked from [backpropagation6/claude-linkedin-automation](https://github.com/backpropagation6/claude-linkedin-automation)
+v3.1.0 (upstream last updated 2026-04-07). MIT, attribution retained.
 
-## [3.2.0] - 2026-04-06
+The upstream repo is 5,107 lines of markdown with no posting code. It works by having Claude drive a
+logged-in Chrome session. This fork keeps the skill packaging and replaces the content layer.
 
-### Added
+### Removed
 
-- **HUMAN-VOICE-LAYER.md** — Anti-detection Level 2: structural naturalness framework. Level 1 prevents algorithmic detection. Level 2 addresses structural patterns that reveal AI authorship to expert human readers. Includes: 7 structural tells, 6 alternative post structures (Stream of Consciousness, Question Without Answer, Start From the Middle, Broken List, Micro-post, Response to Something), Noise Injection rules, pre-publication Human Voice Checklist (5/7 minimum), Before/After examples on real posts.
+| Removed | Why |
+|---|---|
+| `references/anti-detection-playbook.md` (329 lines) | Its purpose was evading LinkedIn's automation classifier. Every rule governed how output *sounds* — character-count variance, rhetorical rotation, tool-mention caps — and none governed whether it was true. |
+| `HUMAN-VOICE-LAYER.md` (302 lines) | "Structural naturalness patterns that betray AI authorship to expert human readers." Its goal was passing as human to people who did not know. |
+| Task `linkedin-daily-post` | Published unattended at 08:00 daily from a pre-written weekly file. Replaced by an approval-gated publisher. |
+| Task `linkedin-daily-engagement` | 25-minute sessions of 8–10 automated likes and 5–8 automated comments, with per-session caps to stay under detection thresholds. |
+| Task `linkedin-reply-to-replies` | Automated replies to real people in real threads. |
+| Task `linkedin-dm-prep` | Automated DM triage and drafting. |
+| Task `linkedin-news-scout` | Five hardcoded web searches scoring headlines 1–10 as topic supply. Topic invention. |
+| Task `linkedin-experiment-audit` | Scored each day's output for detection risk. |
+| The 7-day pillar calendar | Fixed slots (Mon behind-the-scenes → Sun soft CTA) demanded seven posts a week from one or two real inputs. The gap was the slop. |
+| `references/content-templates.md` | Italian-language templates hardcoded to the original author's profile and booking link. |
+| `references/tov-framework.md` | Voice defined as a banned-word list plus a required signature line. |
+| `assets/`, `demo.tape`, `PR-DRAFT.md`, `CONTRIBUTING.md`, `examples/` | Upstream marketing and packaging. |
 
-- **README: Level 2 anti-detection section** — New section documenting the dual-layer architecture with a summary of the 7 structural tells and the 6 alternative structures.
-
-- **README: Engagement rate badge** — Added `3.9%` engagement rate badge to header.
-
-- **README: First product sale milestone** — April 4, 2026: full attribution cycle completed (LinkedIn post → site → purchase) without manual intervention.
-
-### Changed
-
-- Version bumped to 3.2.0
-- Production data updated: 22 days → 27+ days
-- Engagement rate added: 3.9%
-- Reference Files table updated to include HUMAN-VOICE-LAYER.md
-- FAQ: added entry on Human Voice Layer
-
----
-
-## [3.1.0] - 2026-03-25
-
-### Added
-
-- **Wizard Interaction Flow** (P1 fix): New section at top of SKILL.md with explicit turn-by-turn instructions for Claude on how to guide the user through each phase. Questions are grouped (4 turns for Phase 1), with "Wait for answers" gates between each group. Claude no longer has to improvise the conversation flow.
-
-- **Identity Document Generation Bridge** (P3 fix): After collecting all 15 answers, Claude now generates a complete CLAUDE.md using a structured template (Who, Archetype, TOV rules, Vocabulary, Audience, Positioning, Blacklist). The user reviews and approves before Phase 2 begins.
-
-- **Explicit Approval Gate in Phase 4** (P6 fix): Phase 4 now includes a HARD GATE instruction — Claude must present the task table, ask for changes, and wait for explicit "approved" before creating any tasks. Includes list of acceptable approval phrases.
-
-- `modules/linkedin.md` added to Reference Files table
-
-- **Update Flow** (new section): Users with existing setups can update to new skill versions without re-running the wizard. Claude detects current state, diffs changes, presents an update plan, and applies updates after approval. Includes version tracking in CLAUDE.md.
-
-- **Environment Compatibility** (new section): Documents differences between Claude Cowork and Claude Code. Cowork uses `create_scheduled_task` and built-in Chrome MCP; Code uses crontab/Cloud Scheduler and manual MCP config. Wizard (Phase 1-4) works identically in both. Includes recommended setup by use case.
-
-### Changed
-
-- Version bumped to 3.1.0
-- SKILL.md restructured: wizard flow section precedes all phase content
-
----
-
-## [3.0.0] - 2026-03-25
-
-### Changed
-
-- **SKILL.md rewritten as 5-phase guided wizard:**
-  - Phase 1: Identity & Voice (15-question questionnaire)
-  - Phase 2: Strategy & Content (pillar calendar, post format, humanization)
-  - Phase 3: Engagement & Anti-Detection (rules, epistemic verification)
-  - Phase 4: Task Plan Review & Approve (user sees all tasks before creation)
-  - Phase 5: Create Tasks & Iterate (deploy, monitor, adjust)
-
-- **Task approval workflow (Phase 4):** Nothing is automated until user reviews and approves the task plan table
-
-- **New reference: `references/task-catalog.md`** — Full prompt templates for all 10 LinkedIn tasks with {{PLACEHOLDER}} customization
-
-- **Modular architecture:** `modules/linkedin.md` contains full module configuration
-
-### Fixed — Data Integrity
-
-- Duration: "12+ weeks" → "22 days (G0-G22)" (verified production period)
-- Followers: "45 → 200+" → "45 → 55" (verified from weekly reports)
-- Automations: "21" → "10 LinkedIn tasks" (scope narrowed to validated domain)
-- Engagement score: "8.2/10" → "8.0/10" (verified average)
-- GitHub URL: fixed from `giovanniliguori/` to `videomakingio-gif/`
-
----
-
-## [2.0.0] - 2026-03-24
-
-### Changed
-
-- Complete rewrite based on 22 days of production validation
-- Added Identity Questionnaire, Epistemic Verification Gate
-- anti-detection-playbook.md: reorganized by real impact
-- tov-framework.md: emotional register mapping, 10 personal rhetorical patterns
-- content-templates.md: "Diario di Bordo" rubric, worked examples
+Also gone: the requirement for "1 specific micro-anecdote (day, person, physical object)" per case
+study. That rule existed because the generator had no real material, so specificity had to be
+manufactured. A manufactured specific about your own work is a fabricated claim about your own work.
 
 ### Added
 
-- CONTRIBUTING.md, CHANGELOG.md
-- `references/epistemic-verification.md` — 7-checkpoint verification gate
-- Humanization rules, NDI formula, daily audit template
-- DM Strategy, Failure Cases with recovery protocol
+| Added | What |
+|---|---|
+| `references/idea-inbox.md` | Slack `#content-inbox` as the primary and only topic source. Fragment rules, Notion queue schema, dedup by finding, confidentiality filter at ingest. |
+| `references/substance-retrieval.md` | The core addition. A fragment is a pointer; this stage retrieves the artifact behind it. Evidence strength 1–5. Specificity is retrieved, never invented. |
+| `references/publishing-api.md` | Official API: Share on LinkedIn, `w_member_social`, `POST /v2/ugcPosts`. Token lifetime and scope boundaries documented. |
+| `scripts/linkedin_auth.py` | OAuth to the macOS keychain. No token on disk. |
+| `scripts/linkedin_publish.py` | Publishes one post. Refuses without `--i-am-approved`. |
+| Scoring threshold | evidence / non-obviousness / standing, each 1–5. All ≥3 and evidence ≥4, or no draft. |
+| The zero-post guarantee | If nothing clears the bar, the pipeline sends one Slack line and stops. It is allowed to output nothing. |
+| Human approval gate | Only the human sets `Status=Approved`. No timeout, no inferred approval, no automation path across it. Task 4 publishes the human's edited text verbatim. |
 
----
+### Changed
 
-## [1.0.0] - 2026-03-24
+- `SKILL.md` — rewritten. Queue-driven, four stages, four tasks (was ten).
+- `modules/linkedin.md` → `modules/content-engine.md` — operating manual: realistic throughput
+  (2–5 posts/month), review workflow, what to do when the queue is dry, failure modes.
+- `references/epistemic-verification.md` → `references/epistemic-gate.md` — kept the structure,
+  changed the purpose. Upstream ran it to avoid *"expos[ing] the automation"*. Here it runs because
+  publishing something false under your own name is bad on its own terms. Moved from a polish pass to
+  source time, so it can stop a claim rather than soften it.
+- `references/tov-framework.md` → `references/voice.md` — voice built from 3–5 real writing samples
+  instead of adjectives and banned words.
+- `references/content-templates.md` → `references/post-shapes.md` — five shapes, six anti-shapes,
+  English, no hardcoded CTA.
+- `install.sh` — skill renamed `linkedin` → `linkedin-content`.
+- Metrics — upstream optimized impressions against 18–50/post targets. This tracks who replied,
+  inbound referencing a post, and corrections received.
 
-### Added
+### Not implemented, and won't be
 
-- Initial release: SKILL.md, references (tov-framework, anti-detection, content-templates)
-- README with legal disclaimer
-- Examples: weekly-plan.md, engagement-session.md
-
----
-
-**Last updated:** 2026-03-25
+Finding posts to comment on. Reading the feed needs `r_member_social`, closed to new applicants. The
+only route is scraping a logged-in session, which violates the User Agreement.

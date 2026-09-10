@@ -1,377 +1,112 @@
-<p align="center">
-  <h1 align="center">Claude LinkedIn Automation</h1>
-  <p align="center">
-    Autonomous LinkedIn management, validated in production.<br>
-    27+ days. 10 tasks. Zero detection. 3.9% engagement rate.
-  </p>
-</p>
+# LinkedIn Content Engine
 
-<p align="center">
-  <a href="#install">Install</a> &nbsp;&bull;&nbsp;
-  <a href="#how-it-works">How It Works</a> &nbsp;&bull;&nbsp;
-  <a href="#results">Results</a> &nbsp;&bull;&nbsp;
-  <a href="#anti-detection">Anti-Detection</a> &nbsp;&bull;&nbsp;
-  <a href="#compatibility">Compatibility</a> &nbsp;&bull;&nbsp;
-  <a href="CONTRIBUTING.md">Contributing</a>
-</p>
+Turns real work into LinkedIn posts. A Claude skill.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/version-3.2.0-blue" alt="Version">
-  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-  <img src="https://img.shields.io/badge/Claude_Code-skill-8A2BE2" alt="Claude Code Skill">
-  <img src="https://img.shields.io/badge/Cowork-compatible-orange" alt="Cowork Compatible">
-  <img src="https://img.shields.io/badge/Cursor-compatible-teal" alt="Cursor Compatible">
-  <img src="https://img.shields.io/badge/Windsurf-compatible-cyan" alt="Windsurf Compatible">
-  <img src="https://img.shields.io/badge/detection_incidents-0-brightgreen" alt="Zero Detection">
-  <img src="https://img.shields.io/badge/engagement_rate-3.9%25-blue" alt="3.9% Engagement Rate">
-</p>
+Drop half-formed thoughts into a Slack channel during the week. The pipeline goes and finds the
+actual evidence behind each one — the commit, the eval output, the meeting transcript — scores what
+it found, drafts only what clears the bar, and publishes only what you approve, through LinkedIn's
+official API.
 
-<p align="center">
-  <img src="assets/demo.gif" alt="Demo" width="880">
-</p>
+**No fixed calendar. No engagement bots. No feed scraping. No unattended publishing.**
 
 ---
 
-> **Legal Disclaimer** — This skill documents an autonomous LinkedIn management system. Automated interactions may violate [LinkedIn's User Agreement](https://www.linkedin.com/legal/user-agreement). Use at your own risk. The authors assume no liability for account restrictions or bans. Published for educational and research purposes.
+## The one rule
 
----
+**No evidence, no post.**
 
-## What Is This?
+Every claim traces to a retrievable artifact. If the evidence cannot be found, the draft is not
+written. An empty inbox means zero posts that week, and that is the correct outcome.
 
-A **custom skill for Claude** that turns your AI assistant into a full-stack LinkedIn manager. It posts daily, engages with your network, triages DMs, audits itself for detection risk, and reports weekly — all autonomously.
+## Why it works this way
 
-Every rule is extracted from **27+ days of real production data** on a live Italian profile. Not theory. Not best guesses. Empirical evidence from daily audits, scored engagement sessions, and documented incidents that shaped the system.
+A content calendar creates seven slots a week and demands they be filled. Nobody has seven real
+things to say in a week. The gap between the slots and the substance is where invented content comes
+from — and an invented specific in a post about your own work is a fabricated claim about your own
+work.
 
-> **Works in any language.** The wizard was battle-tested in Italian, but the system is language-agnostic. Phase 1 captures your identity, voice, and vocabulary in whatever language you operate in — Claude generates all content in your language. The architecture (pillar calendar, anti-detection rules, NDI scoring, task scheduling) is universal.
+So the queue sets the cadence, not the clock. Expect one post a week, often zero. Two to five a
+month of verifiable material beats thirty of filler.
 
-### The 5-Phase Wizard
-
-Type `/linkedin` and Claude walks you through setup:
+## Pipeline
 
 ```
-Phase 1  IDENTITY        15 questions to define your voice, vocabulary, red flags
-Phase 2  STRATEGY        7-day pillar calendar, post format, humanization rules
-Phase 3  ENGAGEMENT      Commenting rules, anti-detection, epistemic verification
-Phase 4  TASK PLAN       Review every task before anything gets automated
-Phase 5  CREATE & RUN    Deploy tasks, monitor, iterate weekly
+Slack #content-inbox   →  fragments, any length, no format
+        ↓ ingest           (+ Granola transcripts, git history)
+Notion Content Queue   →  New
+        ↓ enrich           retrieve the real artifact behind each pointer
+Notion Content Queue   →  Sourced + evidence + provenance
+        ↓ draft            score evidence/non-obviousness/standing; draft only what passes
+Notion Content Queue   →  Draft
+        ↓ HUMAN APPROVAL   ← the gate. only you cross it.
+LinkedIn ugcPosts API  →  Posted
 ```
 
-Nothing is automated until you explicitly approve. Phase 4 is a **hard gate** — Claude will not proceed without your "approved."
+Four scheduled tasks: `content-ingest`, `content-enrich`, `content-draft`, `content-publish`. Task 3
+is the only one that writes prose, and it is expected to produce nothing on a quiet week.
 
----
-
-<h2 id="install">Install</h2>
+## Install
 
 ```bash
-git clone https://github.com/videomakingio-gif/claude-linkedin-automation.git
-cd claude-linkedin-automation
+git clone <this repo> ~/Documents/linkedin-content-engine
+cd ~/Documents/linkedin-content-engine
 chmod +x install.sh && ./install.sh
 ```
 
-The interactive installer walks you through 3 choices:
-
-| Step | Options |
-|------|---------|
-| **Scope** | Global (all projects) / Project (current only) / Both |
-| **IDE** | Claude Code / Cursor / Windsurf / Any combination |
-| **Confirm** | Review and approve before anything is created |
-
-**Quick install** (skip the wizard):
-```bash
-./install.sh --global     # All projects, Claude Code
-./install.sh --project    # Current project only
-./install.sh --uninstall  # Remove everything, all IDEs
-```
-
-**Update:** `git pull` — Claude Code uses a symlink, so the skill stays in sync. Cursor/Windsurf use file copies — re-run the installer after pulling.
-
-After installing, type `/linkedin` in any Claude session to start.
-
----
-
-<h2 id="how-it-works">How It Works</h2>
-
-### Architecture
+Then in Claude Code:
 
 ```
-claude-linkedin-automation/
-├── SKILL.md                              # The skill itself (5-phase wizard)
-├── HUMAN-VOICE-LAYER.md                  # Anti-detection Level 2: structural naturalness
-├── install.sh                            # Interactive installer
-├── modules/
-│   └── linkedin.md                       # Full module config (560 lines)
-├── references/
-│   ├── tov-framework.md                  # Voice: 10 rhetorical patterns, vocabulary, registers
-│   ├── anti-detection-playbook.md        # 7 rules (L1) + Level 2 structural tells, NDI formula
-│   ├── content-templates.md              # Day-by-day templates with worked examples
-│   ├── epistemic-verification.md         # 7-checkpoint fact verification gate
-│   └── task-catalog.md                   # Full prompt templates for all 10 tasks
-├── examples/
-│   ├── weekly-plan.md                    # Real Week 3 content plan
-│   └── engagement-session.md             # Scored session with 5 comments
-├── assets/                               # Growth charts and dashboard
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-└── LICENSE
+/linkedin-content setup
 ```
 
-### The 10 Tasks
+Setup walks through: creating `#content-inbox`, creating the Notion queue, creating the LinkedIn app,
+OAuth, building `voice.md` from your real writing samples, and installing the tasks.
 
-| # | Task | Schedule | What It Does |
-|---|------|----------|--------------|
-| 1 | `linkedin-daily-post` | Daily 8:00 | Publishes today's post + auto-comment after 20 min |
-| 2 | `linkedin-daily-engagement` | Daily 9:00 | 25-min session: 8-10 likes + 5 comments |
-| 3 | `linkedin-reply-to-replies` | Daily 16:00 | Responds to comment threads |
-| 4 | `linkedin-dm-prep` | Daily 10:00 | Generates DM draft replies for human review |
-| 5 | `linkedin-news-scout` | Daily 7:00 | Fetches niche news, flags content ideas |
-| 6 | `linkedin-experiment-audit` | Daily 15:00 | Naturalness score, anti-pattern compliance |
-| 7 | `linkedin-weekly-planner` | Sat 17:00 | Generates next week's 7 posts |
-| 8 | `linkedin-weekly-diary` | Sat 19:00 | Compiles behind-the-scenes blog draft |
-| 9 | `linkedin-weekly-report` | Sun 20:00 | Analytics: KPIs, per-post ranking, recommendations |
-| 10 | `linkedin-outreach-daily` | Disabled | Cold outreach (opt-in) |
+## Publishing
 
-**Minimum viable setup:** Tasks 1 + 2 + 9. Three tasks, fully autonomous.
+Official API only.
 
----
+- **Product:** Share on LinkedIn — self-serve, no review queue
+- **Scope:** `w_member_social`
+- **Endpoint:** `POST https://api.linkedin.com/v2/ugcPosts`
+- **Limit:** 150 requests/member/day
 
-<h2 id="results">Results</h2>
+Access tokens last ~60 days and self-serve apps do not get refresh tokens, so re-auth is a manual
+30-second browser click-through every couple of months. Task 4 warns 7 days ahead.
 
-### 27+ Days of Production (April 6, 2026)
+## What this deliberately cannot do
 
-| Metric | Value |
-|--------|-------|
-| Duration | 27+ days of daily operation |
-| Scheduled tasks | 10 (9 active + 1 disabled) |
-| Follower growth | 45 → 55+ |
-| Posts published | 7/week, zero missed |
-| Engagement sessions | Daily, 25 min each |
-| **AI detection incidents** | **0** |
-| Avg engagement rate | **3.9%** |
-| L1 proof events | 13+ named interactions |
-| Avg engagement score | 8.0/10 |
-| Non-Detection Index | 5.0+ avg |
-| **First product sale** | **Via LinkedIn funnel (April 4, 2026)** |
+**Find posts to comment on.** Reading the LinkedIn feed requires the `r_member_social` scope, which
+is closed to new applicants. The only workaround is driving a logged-in browser session, which
+violates LinkedIn's User Agreement. Not implemented, and no redesign of the queue changes that.
 
-Professionals replied by name, sent multi-message DMs, mentioned the profile in their own posts, and sent connection requests — all without suspecting automation.
+Substitute: pull candidate discussion topics from sources that do have APIs — RSS, PubMed, news — and
+post the comments yourself.
 
-**Key milestone:** On April 4, 2026, the system completed a full attribution cycle: LinkedIn post → site visit → purchase of a digital product. The funnel worked without any manual intervention.
+## Layout
 
-### Growth Charts
+| Path | What |
+|---|---|
+| `SKILL.md` | The skill. Pipeline, stages, setup. |
+| `modules/content-engine.md` | Operating manual — throughput, review workflow, failure modes |
+| `references/idea-inbox.md` | Capture rules, Notion schema, confidentiality filter |
+| `references/substance-retrieval.md` | Where to find evidence and how to record provenance |
+| `references/epistemic-gate.md` | Claim labelling, seven checks |
+| `references/post-shapes.md` | Five shapes that work, six anti-shapes |
+| `references/voice.md` | How to build a voice file from real samples |
+| `references/publishing-api.md` | Auth, scopes, payloads, token lifetime |
+| `references/task-catalog.md` | Full prompts for the four tasks |
+| `scripts/linkedin_auth.py` | OAuth → macOS keychain |
+| `scripts/linkedin_publish.py` | Publish one approved post |
 
-<details>
-<summary>Click to expand charts</summary>
+## Attribution
 
-![Follower Growth](assets/follower-growth.png)
+Forked from [backpropagation6/claude-linkedin-automation](https://github.com/backpropagation6/claude-linkedin-automation)
+by Giovanni Liguori, MIT licensed. The installer, the skill packaging, and the epistemic gate's
+structure come from there.
 
-![Engagement Quality Score](assets/engagement-score.png)
+The topic sourcing, evidence retrieval, scoring, approval gate, and API publishing are new. The
+anti-detection playbook, the engagement and DM automation, the news scout, and the seven-day pillar
+calendar are deleted. `CHANGELOG.md` lists every change and the reason.
 
-![Non-Detection Index](assets/ndi-tracking.png)
-
-![L1 Proof Events](assets/l1-proof-events.png)
-
-![Impressions per Post](assets/impressions-week3.png)
-
-**[Interactive Dashboard (HTML)](assets/growth-dashboard.html)** — hover tooltips with daily data
-
-</details>
-
----
-
-<h2 id="anti-detection">Anti-Detection</h2>
-
-The system uses a **two-level anti-detection architecture**.
-
-### Level 1: Behavioral Rules (7 rules, empirically validated)
-
-| # | Rule | Why |
-|---|------|-----|
-| 1 | **Tool mention limit**: max 2/5 comments mention your tool | 3/5 was flagged as promotion on Day 1 |
-| 2 | **Structure variation**: never repeat same pattern consecutively | Repetition is the #2 detection vector |
-| 3 | **Off-topic comment**: at least 1/5 outside your niche | 0/5 scored 6.0/10, 1-2/5 scored 8.5-9.0 |
-| 4 | **Evangelization limit**: max 1 promotional phrase per session | "I use it every day" = instant flag |
-| 5 | **Like-only on agreements**: don't extend agreement threads | Extending sounds artificial |
-| 6 | **Fact-check before asserting**: verify or rephrase as question | Profile-B incident, Day 22 |
-| 7 | **High-traffic targeting**: 1+ comment on posts with 200+ reactions | 7-12x reach multiplier |
-
-### Level 2: Structural Naturalness (Human Voice Layer)
-
-Level 1 prevents algorithmic flags. Level 2 addresses a subtler problem: **pattern recognition by expert human readers**. Even with perfect vocabulary and timing, certain structural tells betray AI authorship to the professionals who matter most.
-
-The 7 structural tells that L1 doesn't cover:
-
-| Tell | Pattern | Fix |
-|------|---------|-----|
-| **Simmetria strutturale** | Every post: Hook → Body (3 blocks) → Closing | Rotate among 6+ structures, max 2/week same structure |
-| **Parallelismo sintattico** | Lists with identical grammatical structure | Break symmetry deliberately: 1 element must differ |
-| **Informalità ingegnerizzata** | Informal markers placed at strategic positions | Informality must emerge from structure, not be inserted |
-| **Zero imperfezioni** | No interrupted thoughts, no digressions | Inject 1 genuine flow-break per post |
-| **Case study cinematografici** | Perfect setup-payoff arcs with clean quotes | Add dirty details: vague memory + hyper-specific detail |
-| **Arco emotivo prevedibile** | Every post: tension → resolution | 1 post/week with no resolution, ending in open question |
-| **Registro emotivo mappato** | Wednesday = indignation (constructed, not reactive) | Emotional posts need a real, nameable trigger |
-
-**6 alternative post structures** are defined in [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md): Stream of Consciousness, Question Without Answer, Start From the Middle, Broken List, Micro-post, Response to Something.
-
-**Pre-publication checklist** (5/7 required to publish):
-- [ ] Different structure from yesterday and the day before?
-- [ ] No perfect parallelism in lists? (at least 1 asymmetric element)
-- [ ] At least 1 genuine flow break? (not an inserted marker, a real interruption)
-- [ ] Numbers are not all round? (not 85→9, but 85→11 or "something like 80-90 mins")
-- [ ] Case study has dirty details? (vague memory + specific detail)
-- [ ] Emotional arc is not always positive? (at least 1 unresolved post/week)
-- [ ] Could this post have been written by a human in 5 minutes?
-
-Full methodology: [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md)
-
-### Non-Detection Index (NDI)
-
-```
-NDI = (L1 × 2 + L2 × 1) / (L1 + L2 + L3) × 10
-```
-
-- **L1** (weight 2): Named replies, multi-message DMs, public mentions
-- **L2** (weight 1): Genuine questions, connection requests
-- **L3** (weight 0): Generic likes, one-word replies
-
-**NDI > 5.0** = healthy. **< 3.0** = investigate. **< 4.0 two weeks** = pause 48h and audit.
-
-### Epistemic Verification Gate
-
-Before publishing any factual claim, run 7 checkpoints:
-
-1. Fact vs. Inference — label it correctly
-2. Uncertainty Markers — verified / observed / inferred / speculative
-3. Source Attribution — name it or don't claim it
-4. Temporal Coherence — when did this happen?
-5. Case-Specific Claims — verify in 30s or rephrase as question
-6. Self-Assessment Bias — measured vs estimated vs projected
-7. Absence-as-Proof — "I haven't found" ≠ "it doesn't exist"
-
-**7/7 pass = publish. 5-6/7 = fix and publish. <5/7 = rewrite.**
-
-Full methodology: [`references/anti-detection-playbook.md`](references/anti-detection-playbook.md)
-
----
-
-<h2 id="compatibility">Compatibility</h2>
-
-| Feature | Claude Code | Cowork | Cursor | Windsurf |
-|---------|:-----------:|:------:|:------:|:--------:|
-| Wizard (Phase 1-4) | Full | Full | Full | Full |
-| Identity document generation | Full | Full | Full | Full |
-| Weekly plan creation | Full | Full | Full | Full |
-| Session tasks (Phase 5) | `CronCreate` (3-day max) | `create_scheduled_task` | — | — |
-| Permanent tasks (Phase 5) | crontab / Cloud Scheduler | `create_scheduled_task` | Manual | Manual |
-| Browser automation | Chrome MCP (manual config) | Chrome MCP (built-in) | — | — |
-| Update flow | Full | Full | Full | Full |
-| Install method | Symlink (auto-update) | Symlink | File copy | File copy |
-
-### Recommended Setup
-
-| Use case | Best environment |
-|----------|-----------------|
-| Solo operator, zero config | **Cowork** — scheduled tasks handle everything |
-| Developer, full control | **Claude Code** — cron + Python + GCP |
-| Hybrid | Wizard in Cowork, deploy in Code |
-
----
-
-## Reference Files
-
-| File | When to read |
-|------|-------------|
-| [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md) | Anti-detection Level 2: structural naturalness, 6 post structures, noise injection rules |
-| [`references/tov-framework.md`](references/tov-framework.md) | Setting up voice, vocabulary, emotional registers |
-| [`references/anti-detection-playbook.md`](references/anti-detection-playbook.md) | Configuring engagement rules, NDI scoring |
-| [`references/content-templates.md`](references/content-templates.md) | Creating weekly post plans with day-by-day templates |
-| [`references/epistemic-verification.md`](references/epistemic-verification.md) | Before publishing any factual claim |
-| [`references/task-catalog.md`](references/task-catalog.md) | Customizing task prompts for Phase 5 |
-| [`modules/linkedin.md`](modules/linkedin.md) | Full LinkedIn module implementation reference |
-
----
-
-## Niche Adaptation
-
-The skill was built in the AI/B2B automation niche, but the architecture is **domain-agnostic**. The 7-day pillar calendar adapts to any niche — you keep the emotional structure, change the content domain:
-
-| Niche | Tuesday (Tool/Workflow) | Thursday (Case Study) | Friday (How-To) |
-|-------|------------------------|-----------------------|-----------------|
-| **AI / Automation** | Integration deep-dive | Client time saved | Claude skill tutorial |
-| **B2B SaaS** | Feature walkthrough | Customer ROI story | Integration guide |
-| **Coaching / Personal brand** | Framework breakdown | Client transformation | Routine walkthrough |
-| **Developer / OSS** | Architecture decision | Community contribution | Setup tutorial |
-| **Marketing / Agency** | Campaign teardown | Client results | Platform tutorial |
-| **Legal / Consulting** | Regulatory update | Case resolution | Process guide |
-
-The anti-detection rules, NDI scoring, epistemic verification gate, and task scheduling work identically across all niches. Only the content domain and vocabulary change — and the wizard captures those in Phase 1.
-
----
-
-## FAQ
-
-**How long does setup take?**
-4-6 hours total. Identity definition is 2-3 hours (the hardest part). First week of content 2-3 hours. Task creation 15 minutes.
-
-**What's the minimum viable setup?**
-Tasks 1 (daily-post) + 2 (daily-engagement) + 9 (weekly-report). Three tasks, fully autonomous.
-
-**Can I post more than once per day?**
-Don't. LinkedIn penalizes same-day multiple posts.
-
-**How do I know if comments are natural?**
-Target 8.0+/10 on the scoring rubric. Below 7.0 = adjust rules. See [`anti-detection-playbook.md`](references/anti-detection-playbook.md).
-
-**What if a task fails silently?**
-Every task writes a log. Check `report/` daily. The experiment-audit task (daily 15:00) catches most silent failures.
-
-**Does this only work in Italian?**
-No. The wizard and examples are in Italian (the production language), but the system works in any language. Phase 1 captures your voice, vocabulary, and audience in your language — Claude generates everything accordingly.
-
-**Does this only work for the AI/automation niche?**
-No. The architecture (pillar calendar, anti-detection, NDI, verification gate) is niche-agnostic. See [Niche Adaptation](#niche-adaptation) for examples.
-
-**What is the Human Voice Layer?**
-It's a Level 2 anti-detection framework added after 22 days of operation. Level 1 prevents algorithmic detection. Level 2 addresses structural patterns that reveal AI authorship to expert human readers — even when vocabulary and timing are correct. See [`HUMAN-VOICE-LAYER.md`](HUMAN-VOICE-LAYER.md).
-
----
-
-## Who Built This
-
-**Giovanni Liguori** — AI Automation Architect
-
-I transform manual processes into automated ecosystems for Italian SMBs and freelancers using Claude + Python + Google Cloud.
-
-[giovanniliguori.it](https://giovanniliguori.it) &nbsp;&bull;&nbsp; [LinkedIn](https://www.linkedin.com/in/giovanniliguori-ai/) &nbsp;&bull;&nbsp; [Case Study](https://giovanniliguori.it/case-study/ecosistema-claude)
-
----
-
-## The Experiment
-
-Can a well-instructed LLM manage a professional LinkedIn profile without being identified as non-human?
-
-After 27+ days of daily operation:
-- **Zero** detection incidents
-- **13+** L1 proof events (named conversations with professionals)
-- **8.0/10** average engagement quality
-- **3.9%** average engagement rate
-- **5.0+** NDI (Non-Detection Index) consistently
-- **1 product sale** attributed directly to the LinkedIn funnel (April 4, 2026)
-
-The system works because it treats **identity and anti-detection as the same thing**. A profile with a clear, consistent, humanized voice is inherently less likely to be flagged. It's also more likely to convert.
-
-The Level 2 (Human Voice Layer) extends this principle: structural naturalness — varied post formats, asymmetric lists, dirty case study details, unresolved emotional arcs — builds the kind of trust that drives DMs, connection requests, and ultimately sales.
-
----
-
-## License
-
-**MIT License** — Copyright (c) 2026 Giovanni Liguori
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). The methodology improves with more data points.
-
----
-
-<p align="center">
-  <sub>Built with Claude. Validated in production. Open source.</sub>
-</p>
+MIT.
