@@ -36,7 +36,8 @@ Incorrect responses, all of which recreate the problem this fork exists to fix:
 
 ## Review workflow
 
-Task 3 DMs the draft. The reviewer's job, in about five minutes:
+Task 3 DMs the draft. The reviewer is not assumed to be technical — the whole path is a Slack
+message and a reaction. Their job, in about five minutes:
 
 1. **Check the numbers against `Provenance`.** Every figure should be traceable in under a minute. If
    one is not, that is a bug in enrichment — reply in the row and set it back to `Sourced`.
@@ -45,9 +46,17 @@ Task 3 DMs the draft. The reviewer's job, in about five minutes:
 3. **Rewrite freely.** Edit `Draft` directly. Task 4 publishes *your* text verbatim and will not
    regenerate it.
 4. **Check what it does not say.** Missing caveats are the common failure, not wrong facts.
-5. Set `Status = Approved`, or leave it and it never publishes.
+5. **React ✅ on the DM.** That is the whole approval action. Or reply with edits and Claude
+   re-drafts. Or ignore it, and it never publishes.
 
 Nothing expires. An unapproved draft sits until you deal with it.
+
+Notion is the record, not the interface. A reviewer who never opens it still has a complete workflow:
+read the DM, react or reply. Opening the row is for when you want to rewrite the text yourself.
+
+An earlier design used pull-request approval — one PR per draft, merge to publish. Rejected: it
+assumes the reviewer reads diffs. If the reviewer is a non-programmer, the approval surface has to be
+somewhere they already are.
 
 ## Metrics worth watching
 
@@ -79,6 +88,8 @@ own and optimizing them directly is how this becomes a slop generator again.
 | Reviewer keeps rewriting heavily | `voice.md` is built from adjectives, not samples | Rebuild it from 3–5 real writing samples |
 | Token expired mid-week | Skipped the T-7 warning | Task 4 warns at 7 days; re-run `linkedin_auth.py` |
 | Post published without approval | Should be impossible | Stop task 4 immediately and audit. `--i-am-approved` plus a `Status=Approved` read are the only path. |
+| Token lapsed on a quiet week | Task 4 exited before the expiry check | Fixed — the check is step 0, ahead of the no-rows exit |
+| A ✅ from someone else published a post | Task 4 didn't check the reacting user id | Only `{{DM_TARGET}}`'s reaction counts. Audit step 1b. |
 
 ## Confidentiality
 

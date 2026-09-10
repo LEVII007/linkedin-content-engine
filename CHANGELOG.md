@@ -63,3 +63,26 @@ manufactured. A manufactured specific about your own work is a fabricated claim 
 
 Finding posts to comment on. Reading the feed needs `r_member_social`, closed to new applicants. The
 only route is scraping a logged-in session, which violates the User Agreement.
+
+---
+
+## Ported from martinopedal/linkedin-auto-poster
+
+[martinopedal/linkedin-auto-poster](https://github.com/martinopedal/linkedin-auto-poster) (MIT) is a
+better-engineered take on the same problem — real Python, tests, official `ugcPosts` API, no browser
+automation. Its topic source is RSS feeds and GitHub releases, which is the wrong input here, but two
+pieces were worth taking:
+
+- **`scripts/validate_draft.py`** — PII and secret patterns adapted from its `src/drafts/validator.py`,
+  retargeted from Norwegian identifiers (fødselsnummer, org number) to this context: medical record
+  numbers, provider NPIs, patient identifiers, India and US phone formats, AWS keys, private keys.
+  Its 41-phrase banned-vocabulary list was **not** taken — policing words does not fix a shallow topic.
+- **Token expiry as a first-class check.** Reading its `token-reminder.yml` surfaced a bug here: task 4
+  checked expiry *after* its early exit for "no approved rows", so on any quiet week the warning never
+  fired. The check is now step 0.
+
+### Rejected: PR-based approval
+
+Its approval gate is a GitHub PR — one per draft, add an `approve-post` label, merge to publish. Good
+design, and better than Notion on audit trail. Not adopted: it assumes the reviewer reads diffs. The
+reviewer here is not a programmer, so approval is a ✅ reaction on a Slack DM instead.

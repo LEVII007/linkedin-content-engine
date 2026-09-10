@@ -38,12 +38,17 @@ Notion Content Queue   →  New
 Notion Content Queue   →  Sourced + evidence + provenance
         ↓ draft            score evidence/non-obviousness/standing; draft only what passes
 Notion Content Queue   →  Draft
-        ↓ HUMAN APPROVAL   ← the gate. only you cross it.
+        ↓ validate         secrets / PII / clinical identifiers — blocks before a human sees it
+Slack DM to reviewer   →  Draft
+        ↓ HUMAN APPROVAL   ← react ✅ to approve, or reply with edits. only the reviewer crosses it.
 LinkedIn ugcPosts API  →  Posted
 ```
 
 Four scheduled tasks: `content-ingest`, `content-enrich`, `content-draft`, `content-publish`. Task 3
 is the only one that writes prose, and it is expected to produce nothing on a quiet week.
+
+**The reviewer doesn't need to be technical.** Approval is a Slack reaction on the draft DM — no
+Notion, no pull request, no diff. Notion is the record; Slack is the interface.
 
 ## Install
 
@@ -96,6 +101,7 @@ post the comments yourself.
 | `references/voice.md` | How to build a voice file from real samples |
 | `references/publishing-api.md` | Auth, scopes, payloads, token lifetime |
 | `references/task-catalog.md` | Full prompts for the four tasks |
+| `scripts/validate_draft.py` | Pre-review safety check — secrets, PII, clinical identifiers |
 | `scripts/linkedin_auth.py` | OAuth → macOS keychain |
 | `scripts/linkedin_publish.py` | Publish one approved post |
 
