@@ -1,120 +1,123 @@
-# LinkedIn Content Engine
+# Supreet's LinkedIn Claude Skills
 
-Turns real work into LinkedIn posts. A Claude skill.
+A private set of Claude skills for capturing Supreet's thoughts, maintaining his context, drafting
+in his real voice, reviewing, and optionally publishing through LinkedIn's official API.
 
-Drop half-formed thoughts into a Slack channel during the week. The pipeline goes and finds the
-actual evidence behind each one — the commit, the eval output, the meeting transcript — scores what
-it found, drafts only what clears the bar, and publishes only what you approve, through LinkedIn's
-official API.
-
-**No fixed calendar. No engagement bots. No feed scraping. No unattended publishing.**
-
----
-
-## The one rule
-
-**No evidence, no post.**
-
-Every claim traces to a retrievable artifact. If the evidence cannot be found, the draft is not
-written. An empty inbox means zero posts that week, and that is the correct outcome.
-
-## Why it works this way
-
-A content calendar creates seven slots a week and demands they be filled. Nobody has seven real
-things to say in a week. The gap between the slots and the substance is where invented content comes
-from — and an invented specific in a post about your own work is a fabricated claim about your own
-work.
-
-So the queue sets the cadence, not the clock. Expect one post a week, often zero. Two to five a
-month of verifiable material beats thirty of filler.
-
-## Pipeline
-
-```
-Slack #content-inbox   →  fragments, any length, no format
-        ↓ ingest           (+ Granola transcripts, git history)
-Notion Content Queue   →  New
-        ↓ enrich           retrieve the real artifact behind each pointer
-Notion Content Queue   →  Sourced + evidence + provenance
-        ↓ draft            score evidence/non-obviousness/standing; draft only what passes
-Notion Content Queue   →  Draft
-        ↓ validate         secrets / PII / clinical identifiers — blocks before a human sees it
-Slack DM to reviewer   →  Draft
-        ↓ HUMAN APPROVAL   ← react ✅ to approve, or reply with edits. only the reviewer crosses it.
-LinkedIn ugcPosts API  →  Posted
-```
-
-Four scheduled tasks: `content-ingest`, `content-enrich`, `content-draft`, `content-publish`. Task 3
-is the only one that writes prose, and it is expected to produce nothing on a quiet week.
-
-**The reviewer doesn't need to be technical.** Approval is a Slack reaction on the draft DM — no
-Notion, no pull request, no diff. Notion is the record; Slack is the interface.
+This is not a hosted app. Nothing runs in the background. Supreet runs a skill whenever he wants.
 
 ## Install
 
 ```bash
-git clone <this repo> ~/Documents/linkedin-content-engine
-cd ~/Documents/linkedin-content-engine
-chmod +x install.sh && ./install.sh
+git clone https://github.com/LEVII007/supreet-linkedin-content-engine.git
+cd supreet-linkedin-content-engine
+chmod +x install.sh
+./install.sh
 ```
 
-Then in Claude Code:
+Restart Claude Code after installation.
 
+## The normal command
+
+```text
+/linkedin-today
 ```
-/linkedin-content setup
+
+Flow:
+
+```text
+saved thought → one useful follow-up → draft → Supreet edits or approves → optional publish
 ```
 
-Setup walks through: creating `#content-inbox`, creating the Notion queue, creating the LinkedIn app,
-OAuth, selecting the observed voice profile, and installing the tasks. Supreet's profile is already
-built from 18 of his own posts and his comment replies.
+If there is nothing worth posting, the skill says so. It never fills a calendar slot.
 
-## Publishing
+## Scratch pad
 
-Official API only.
+Supreet can save a thought at any time:
 
-- **Product:** Share on LinkedIn — self-serve, no review queue
-- **Scope:** `w_member_social`
-- **Endpoint:** `POST https://api.linkedin.com/v2/ugcPosts`
-- **Limit:** 150 requests/member/day
+```text
+/linkedin-capture enterprise AI adoption feels like latent heat
+```
 
-Access tokens last ~60 days and self-serve apps do not get refresh tokens, so re-auth is a manual
-30-second browser click-through every couple of months. Task 4 warns 7 days ahead.
+Claude stores the exact words under `~/.linkedin-content/inbox/`. It does not rewrite them.
 
-## What this deliberately cannot do
+He can also use the main command:
 
-**Find posts to comment on.** Reading the LinkedIn feed requires the `r_member_social` scope, which
-is closed to new applicants. The only workaround is driving a logged-in browser session, which
-violates LinkedIn's User Agreement. Not implemented, and no redesign of the queue changes that.
+```text
+/linkedin-content capture enterprise teams are measuring the temperature while the ice is melting
+```
 
-Substitute: pull candidate discussion topics from sources that do have APIs — RSS, PubMed, news — and
-post the comments yourself.
+## Add information about himself
 
-## Layout
+```text
+/linkedin-profile I changed my mind about dashboards after seeing...
+```
 
-| Path | What |
+This adds facts, first-hand stories, opinions, current priorities, and voice corrections to his
+private profile at `~/.linkedin-content/profile.md`.
+
+Private context is labelled and cannot be copied into a public post without later confirmation.
+
+## Skills
+
+| Command | Purpose |
 |---|---|
-| `SKILL.md` | The skill. Pipeline, stages, setup. |
-| `modules/content-engine.md` | Operating manual — throughput, review workflow, failure modes |
-| `references/idea-inbox.md` | Capture rules, Notion schema, confidentiality filter |
-| `references/substance-retrieval.md` | Where to find evidence and how to record provenance |
-| `references/epistemic-gate.md` | Claim labelling, seven checks |
-| `references/post-shapes.md` | Five shapes that work, six anti-shapes |
-| `references/voice.md` | How to build a voice profile from real samples |
-| `references/voice-supreet.md` | Active profile: audience, structures, habits, public claim index, draft checklist |
-| `references/publishing-api.md` | Auth, scopes, payloads, token lifetime |
-| `references/task-catalog.md` | Full prompts for the four tasks |
-| `scripts/validate_draft.py` | Pre-review safety check — secrets, PII, clinical identifiers |
-| `scripts/linkedin_auth.py` | OAuth → macOS keychain |
-| `scripts/linkedin_publish.py` | Publish one approved post |
+| `/linkedin-today` | Complete one short content session |
+| `/linkedin-capture` | Save a raw thought without rewriting it |
+| `/linkedin-profile` | Add or correct information about Supreet |
+| `/linkedin-draft` | Draft one saved idea; never publishes |
+| `/linkedin-publish` | Display final text and publish only after explicit approval |
+| `/linkedin-content` | Main router for all commands |
 
-## Attribution
+## Voice
 
-Forked from [backpropagation6/claude-linkedin-automation](https://github.com/backpropagation6/claude-linkedin-automation)
-by Giovanni Liguori, MIT licensed. The installer, the skill packaging, and the epistemic gate's
-structure come from there.
+The starting profile comes from 18 of Supreet's own LinkedIn posts and his comment replies.
 
-The topic sourcing, evidence retrieval, scoring, approval gate, and API publishing are new. The
-anti-detection playbook, the engagement and DM automation, the news scout, and the seven-day pillar
-calendar are deleted. `CHANGELOG.md` lists every change and the reason.
+It captures:
 
-MIT.
+- his audience and career context
+- setup → reversal, scene → claim, and Weekend Pondering structures
+- deliberate emoji, short emphasis fragments, and hashtags
+- public claims that require freshness checks before reuse
+- topics and behaviours he avoids
+
+His own profile can evolve through `/linkedin-profile`. Raw notes remain verbatim.
+
+## Publishing setup
+
+Drafting works without LinkedIn access. Publishing is optional.
+
+Run:
+
+```text
+/linkedin-publish setup
+```
+
+Supreet creates a LinkedIn developer app with **Sign In with LinkedIn using OpenID Connect** and
+**Share on LinkedIn**. The token is stored in his macOS keychain.
+
+Before every publish, Claude shows the complete final text and asks for explicit approval of that
+exact version. There is no unattended publishing.
+
+## Boundaries
+
+- No fixed posting calendar
+- No invented topics or personal stories
+- No feed scraping or logged-in browser automation
+- No auto-comments, likes, replies, or DMs
+- No classifier evasion
+- No patient data, credentials, NDA details, or private customer information
+
+## Update
+
+```bash
+cd supreet-linkedin-content-engine
+git pull
+```
+
+The installer uses symlinks, so a pull updates the installed skills immediately.
+
+## Uninstall
+
+```bash
+./install.sh --uninstall
+```

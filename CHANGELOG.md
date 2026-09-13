@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.0 — 2026-09-13 — Manual Claude skill suite
+
+- Added six installable Claude skills: daily orchestration, capture, profile, draft, publish, and
+  command routing.
+- Replaced Notion and scheduled tasks with a private local workspace at `~/.linkedin-content/`.
+- Added `/linkedin-capture` as Supreet's zero-format scratch pad and `/linkedin-profile` for adding
+  his own facts, stories, opinions, priorities, and voice corrections.
+- Added deterministic pre-publish checks and official LinkedIn OAuth/publishing scripts inside the
+  relevant skills.
+- Publishing is manual: Claude displays the exact final text and requires fresh explicit approval.
+- Replaced the old installer with a small Claude Code skill-suite installer.
+
 ## 1.1.0 — 2026-09-13 — Supreet voice integration
 
 - Added `references/voice-supreet.md`, derived from 18 of Supreet's posts and his comment replies.
