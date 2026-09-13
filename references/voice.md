@@ -6,6 +6,12 @@ Upstream defined voice with a banned-word list and a required signature line, an
 character-count variance so posts would not look machine-generated. All of that is deleted. The
 reason a post reads as human is that a human did the work and approved the words.
 
+## Active profile
+
+`references/voice-supreet.md` — built from 18 of his own LinkedIn posts. It is the authority for
+this user. Where it disagrees with the defaults below, **the profile wins**; the conflicts are
+listed in its last section.
+
 ## How to build this file
 
 Do not ask the user for adjectives. "Direct but warm" produces nothing usable.
