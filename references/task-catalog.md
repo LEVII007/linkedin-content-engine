@@ -1,9 +1,5 @@
 # Task Catalog
 
-> Historical design only. Version 2 runs executable orchestration from `src/content_engine` through
-> `.github/workflows/orchestrate.yml`. These Claude task prompts are retained as design history and
-> are not installed or scheduled.
-
 Four tasks. Placeholders in `{{BRACES}}` are filled at setup.
 
 | Placeholder | Meaning |

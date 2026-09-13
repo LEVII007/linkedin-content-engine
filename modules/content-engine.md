@@ -1,9 +1,5 @@
 # Operating Manual
 
-> Historical version 1 operating notes. The active version 2 workflow is documented in `README.md`
-> and implemented in `src/content_engine`. Notion and Claude Code scheduled tasks are no longer part
-> of the deployed system.
-
 `SKILL.md` describes the pipeline. This describes living with it.
 
 ## Expected throughput

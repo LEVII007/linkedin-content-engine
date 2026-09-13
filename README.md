@@ -1,135 +1,120 @@
-# Supreet's LinkedIn Content Engine
+# LinkedIn Content Engine
 
-A private, Slack-first system that turns Supreet's raw thoughts into LinkedIn drafts in his observed
-voice. He reviews in Slack. Nothing publishes without his ✅ reaction.
+Turns real work into LinkedIn posts. A Claude skill.
 
-## What Supreet does
+Drop half-formed thoughts into a Slack channel during the week. The pipeline goes and finds the
+actual evidence behind each one — the commit, the eval output, the meeting transcript — scores what
+it found, drafts only what clears the bar, and publishes only what you approve, through LinkedIn's
+official API.
 
-Use one private Slack channel shared only with the app.
+**No fixed calendar. No engagement bots. No feed scraping. No unattended publishing.**
 
-1. Drop a thought in any form: `enterprise AI adoption feels like latent heat`.
-2. Add context as thread replies if useful.
-3. The app either asks one concrete follow-up question or posts a draft.
-4. Reply to the draft with edits, or react ✅.
-5. An approved draft publishes through LinkedIn's official API on the next run.
+---
 
-No Notion, GitHub, Python, or Claude interface is visible to him.
+## The one rule
 
-## Orchestration
+**No evidence, no post.**
+
+Every claim traces to a retrievable artifact. If the evidence cannot be found, the draft is not
+written. An empty inbox means zero posts that week, and that is the correct outcome.
+
+## Why it works this way
+
+A content calendar creates seven slots a week and demands they be filled. Nobody has seven real
+things to say in a week. The gap between the slots and the substance is where invented content comes
+from — and an invented specific in a post about your own work is a fabricated claim about your own
+work.
+
+So the queue sets the cadence, not the clock. Expect one post a week, often zero. Two to five a
+month of verifiable material beats thirty of filler.
+
+## Pipeline
 
 ```
-private Slack channel
-  ├─ Supreet's top-level messages → new ideas
-  ├─ thread replies → context or edit instructions
-  └─ ✅ by Supreet only → explicit approval
-              ↓ every 30 minutes
-GitHub Actions
-  ├─ private GitHub Issues → durable internal state
-  ├─ Anthropic API → draft or ask for missing context
-  ├─ safety checks → PII, secrets, clinical identifiers
-  └─ LinkedIn Share API → publish one approved post
+Slack #content-inbox   →  fragments, any length, no format
+        ↓ ingest           (+ Granola transcripts, git history)
+Notion Content Queue   →  New
+        ↓ enrich           retrieve the real artifact behind each pointer
+Notion Content Queue   →  Sourced + evidence + provenance
+        ↓ draft            score evidence/non-obviousness/standing; draft only what passes
+Notion Content Queue   →  Draft
+        ↓ validate         secrets / PII / clinical identifiers — blocks before a human sees it
+Slack DM to reviewer   →  Draft
+        ↓ HUMAN APPROVAL   ← react ✅ to approve, or reply with edits. only the reviewer crosses it.
+LinkedIn ugcPosts API  →  Posted
 ```
 
-GitHub Issues are an internal database. Each idea has exactly one status label:
-`content:new`, `content:needs-context`, `content:review`, `content:approved`,
-`content:publishing`, `content:posted`, `content:skipped`, or `content:failed`.
+Four scheduled tasks: `content-ingest`, `content-enrich`, `content-draft`, `content-publish`. Task 3
+is the only one that writes prose, and it is expected to produce nothing on a quiet week.
 
-The `content:publishing` state prevents blind retries. If a process dies after LinkedIn accepts a
-post, the next run stops instead of risking a duplicate.
+**The reviewer doesn't need to be technical.** Approval is a Slack reaction on the draft DM — no
+Notion, no pull request, no diff. Notion is the record; Slack is the interface.
 
-## Safety boundaries
-
-- Only messages written by `SLACK_APPROVER_USER_ID` become ideas.
-- Only that same person's ✅ can approve.
-- ✅ and ❌ together do not approve.
-- A final safety scan runs immediately before publishing.
-- `PUBLISH_ENABLED` defaults to `false`.
-- One approved post is published per run.
-- No feed scraping, auto-comments, auto-likes, DMs, or detection evasion.
-- A factual detail must come from Supreet's thought/thread. The voice profile is not permission to
-  insert old company claims.
-
-## Setup
-
-### 1. Create the private Slack scratch pad
-
-Create a private channel such as `supreet-content-inbox`. Initially add only Supreet and the app.
-
-Create a Slack app from `slack-app-manifest.yml`, install it, and invite it to that private channel.
-Copy:
-
-- Bot token (`xoxb-...`)
-- Channel ID
-- Supreet's Slack user ID
-
-The app only needs `chat:write`, `groups:history`, and `reactions:read`.
-
-### 2. Configure GitHub Actions
+## Install
 
 ```bash
-chmod +x scripts/configure_github.sh
-./scripts/configure_github.sh OWNER/REPO CHANNEL_ID SUPREET_USER_ID
+git clone <this repo> ~/Documents/linkedin-content-engine
+cd ~/Documents/linkedin-content-engine
+chmod +x install.sh && ./install.sh
 ```
 
-The script securely prompts for the Slack bot token and Anthropic API key. It stores:
+Then in Claude Code:
 
-**Secrets:** `SLACK_BOT_TOKEN`, `ANTHROPIC_API_KEY`
-
-**Variables:** `SLACK_CHANNEL_ID`, `SLACK_APPROVER_USER_ID`, `ANTHROPIC_MODEL`,
-`PUBLISH_ENABLED=false`
-
-### 3. Configure LinkedIn
-
-Create a LinkedIn developer app. Add **Sign In with LinkedIn using OpenID Connect** and
-**Share on LinkedIn**. Add `http://localhost:8765/callback` as an OAuth redirect URL.
-
-Then run locally:
-
-```bash
-export LINKEDIN_CLIENT_ID="..."
-export LINKEDIN_CLIENT_SECRET="..."
-python scripts/linkedin_auth_github.py --repo OWNER/REPO
+```
+/linkedin-content setup
 ```
 
-Supreet must complete the consent screen himself. The script sends the token directly to the private
-repository's Actions secrets and never prints it.
+Setup walks through: creating `#content-inbox`, creating the Notion queue, creating the LinkedIn app,
+OAuth, selecting the observed voice profile, and installing the tasks. Supreet's profile is already
+built from 18 of his own posts and his comment replies.
 
-Finally enable publishing:
+## Publishing
 
-```bash
-gh variable set PUBLISH_ENABLED --repo OWNER/REPO --body true
-```
+Official API only.
 
-Keep it `false` until a full dry run produces a good Slack draft.
+- **Product:** Share on LinkedIn — self-serve, no review queue
+- **Scope:** `w_member_social`
+- **Endpoint:** `POST https://api.linkedin.com/v2/ugcPosts`
+- **Limit:** 150 requests/member/day
 
-### 4. Run once
+Access tokens last ~60 days and self-serve apps do not get refresh tokens, so re-auth is a manual
+30-second browser click-through every couple of months. Task 4 warns 7 days ahead.
 
-Open **Actions → LinkedIn content engine → Run workflow**. After that it runs every 30 minutes.
-GitHub schedules can start a few minutes late.
+## What this deliberately cannot do
 
-## Local development
+**Find posts to comment on.** Reading the LinkedIn feed requires the `r_member_social` scope, which
+is closed to new applicants. The only workaround is driving a logged-in browser session, which
+violates LinkedIn's User Agreement. Not implemented, and no redesign of the queue changes that.
 
-```bash
-python -m pip install -e .
-python -m unittest discover -s tests -v
-```
+Substitute: pull candidate discussion topics from sources that do have APIs — RSS, PubMed, news — and
+post the comments yourself.
 
-Run `linkedin-engine check-config` to verify environment names without making API calls.
+## Layout
 
-## Voice
-
-`references/voice-supreet.md` was derived from 18 of Supreet's own posts and his comment replies.
-It is authoritative over generic shapes. Personal founder stories and original “Weekend Pondering”
-ideas rank above routine product announcements when the underlying evidence is equally strong.
-
-## Token renewal
-
-LinkedIn access tokens normally expire in about 60 days. Re-run
-`scripts/linkedin_auth_github.py` before expiry. The expiry timestamp is stored as a GitHub variable.
-The app sends one Slack warning when seven days or less remain.
+| Path | What |
+|---|---|
+| `SKILL.md` | The skill. Pipeline, stages, setup. |
+| `modules/content-engine.md` | Operating manual — throughput, review workflow, failure modes |
+| `references/idea-inbox.md` | Capture rules, Notion schema, confidentiality filter |
+| `references/substance-retrieval.md` | Where to find evidence and how to record provenance |
+| `references/epistemic-gate.md` | Claim labelling, seven checks |
+| `references/post-shapes.md` | Five shapes that work, six anti-shapes |
+| `references/voice.md` | How to build a voice profile from real samples |
+| `references/voice-supreet.md` | Active profile: audience, structures, habits, public claim index, draft checklist |
+| `references/publishing-api.md` | Auth, scopes, payloads, token lifetime |
+| `references/task-catalog.md` | Full prompts for the four tasks |
+| `scripts/validate_draft.py` | Pre-review safety check — secrets, PII, clinical identifiers |
+| `scripts/linkedin_auth.py` | OAuth → macOS keychain |
+| `scripts/linkedin_publish.py` | Publish one approved post |
 
 ## Attribution
 
 Forked from [backpropagation6/claude-linkedin-automation](https://github.com/backpropagation6/claude-linkedin-automation)
-by Giovanni Liguori under the MIT license. This version removes browser automation, engagement bots,
-and detection evasion, and replaces the prompt-only pipeline with executable orchestration.
+by Giovanni Liguori, MIT licensed. The installer, the skill packaging, and the epistemic gate's
+structure come from there.
+
+The topic sourcing, evidence retrieval, scoring, approval gate, and API publishing are new. The
+anti-detection playbook, the engagement and DM automation, the news scout, and the seven-day pillar
+calendar are deleted. `CHANGELOG.md` lists every change and the reason.
+
+MIT.

@@ -12,6 +12,7 @@ No browser automation. No cookies. No scraping. One documented endpoint.
 | Endpoint | `POST https://api.linkedin.com/v2/ugcPosts` |
 | Required header | `X-Restli-Protocol-Version: 2.0.0` |
 | Success | `201 Created`, new post id in the `X-RestLi-Id` response header |
+| Rate limit | 150 requests/member/day, 100,000/app/day |
 
 Docs: <https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-serve/share-on-linkedin>
 
@@ -21,25 +22,23 @@ Docs: <https://learn.microsoft.com/en-us/linkedin/consumer/integrations/self-ser
    requires this even for personal posting).
 2. Products tab → add **Share on LinkedIn**. Granted immediately.
 3. Auth tab → add redirect URL `http://localhost:8765/callback`.
-4. Run `scripts/linkedin_auth_github.py --repo OWNER/REPO`. It opens the consent screen, catches the
-   redirect, exchanges the code, and stores the token directly as a GitHub Actions secret.
+4. Run `scripts/linkedin_auth.py`. It opens the consent screen, catches the redirect, exchanges the code,
+   and stores the token in the macOS keychain under service `linkedin-content-engine`.
 
-**The token never goes in git or workflow logs.** The local helper sends it to `gh secret set` without
-printing it. Do not add a fallback that writes it to a file.
+**The token never goes in the repo.** `.gitignore` covers `.env` and `*.token`, but the keychain is the
+actual store. Do not add a fallback that writes it to a file.
 
 ## Token lifetime — the operational catch
 
 - Access tokens are valid **~60 days**.
 - Programmatic refresh tokens are gated behind LinkedIn approval and are **not** granted by the
   self-serve Share on LinkedIn product.
-- So: **expect to re-run `linkedin_auth_github.py` roughly every two months.** It is a browser click-through,
+- So: **expect to re-run `linkedin_auth.py` roughly every two months.** It is a browser click-through,
   about 30 seconds.
-- `src/content_engine/linkedin.py` checks expiry before posting and fails rather than publishing with
-  an expired token.
+- `linkedin_publish.py` checks expiry before posting and fails loudly with "token expired, run
+  linkedin_auth.py" rather than half-publishing.
 
-The expiry timestamp is stored in `LINKEDIN_TOKEN_EXPIRES_AT`. The orchestration posts one Slack
-warning when seven days or less remain. A private `system:token-warning` issue prevents repeat alerts
-for the same token.
+Task 4 should surface an expiry warning in Slack at T-7 days so it never surprises anyone.
 
 ## Scope boundaries
 
