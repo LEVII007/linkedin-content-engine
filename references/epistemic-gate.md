@@ -56,8 +56,9 @@ working notes for the reviewer and are stripped from the published text.
    comparison fair? Was the baseline real or convenient? Would a competitor describe this number the
    same way? State what the result does *not* show.
 
-7. **Absence as proof.** "No one is doing this" almost always means "I did not find anyone doing
-   this." "It's impossible" usually means "I could not find a way." Say the weaker, true thing.
+7. **Absence as proof.** Check "No one is doing this" and "It's impossible" like any other external
+   factual claim. If evidence disproves one, cut the whole claim and report the contradiction under
+   the drafting skill's decision table. Do not soften it to "I did not find anyone" or "it seems."
 
 ## Scoring
 

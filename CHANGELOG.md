@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.2.1 — 2026-09-14 — Complete investigation before drafting
+
+- Made confidentiality failures stop drafting without stopping research. The blocked result now
+  names every blocker and contradiction found in one pass.
+- Changed externally contradicted side details to cut-and-report. The exact false claim and evidence
+  appear above the draft; load-bearing contradictions still block.
+- Consolidated repeated safety guidance into one decision table without weakening internal-number,
+  customer-clearance, confidentiality, commonplace, or prior-post gates.
+
 ## 2.2.0 — 2026-09-14 — Conservative drafting gates
 
 - Made drafting load the epistemic gate, confidentiality rules, full voice profile, public claim
