@@ -28,8 +28,9 @@ Read the relevant sibling `SKILL.md` and follow it exactly. Do not improvise a s
    - If there are several equally strong ideas, prefer a personal founder moment or “Weekend
      Pondering” idea over a routine product announcement.
    - If there is no real material, say `Nothing worth forcing today.` and stop.
-4. Follow the drafting skill. Ask at most one missing-context question at a time.
-5. Show the full draft.
+4. Follow the drafting skill. It checks his facts on the web and fills gaps before writing. Ask at
+   most one missing-context question at a time.
+5. Show the full draft, followed by the sources used and anything research could not confirm.
 6. Ask what Supreet wants:
    - revise
    - save for later
@@ -39,7 +40,8 @@ Read the relevant sibling `SKILL.md` and follow it exactly. Do not improvise a s
 
 ## Hard boundaries
 
-- Do not create a topic from news, a fixed calendar, or a generic “pharma trend”.
+- Do not create a topic from news, a fixed calendar, or a generic “pharma trend”. Every topic starts
+  in Supreet's inbox; web research only verifies and enriches what he already said.
 - Do not publish merely because Supreet invoked this skill.
 - Do not automate comments, likes, replies, DMs, or feed browsing.
 - Do not ask Supreet to open files. Summarize the inbox and show drafts in chat.

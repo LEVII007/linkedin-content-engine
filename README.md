@@ -25,7 +25,7 @@ Restart Claude Code after installation.
 Flow:
 
 ```text
-saved thought → one useful follow-up → draft → Supreet edits or approves → optional publish
+saved thought → one useful follow-up → web fact-check → draft → Supreet edits or approves → optional publish
 ```
 
 If there is nothing worth posting, the skill says so. It never fills a calendar slot.
@@ -81,6 +81,19 @@ It captures:
 - topics and behaviours he avoids
 
 His own profile can evolve through `/linkedin-profile`. Raw notes remain verbatim.
+
+Five of his published posts are stored in `skills/linkedin-draft/examples.md`, each annotated with
+why it worked and what to copy. Drafting reads them as a reference, never as text to reuse.
+
+## Research
+
+Supreet's notes are usually raw, and sometimes half-remembered. Before writing, the drafting skill
+searches the web to check his numbers and dates, fill in a detail he gestured at, confirm that a
+borrowed concept is explained correctly, and flag when a take is already common.
+
+The topic always comes from his inbox. Research never chooses what to post about, never becomes his
+experience, and never silently corrects him — a contradiction is raised before drafting. Every
+sourced fact is listed with its link under the draft.
 
 ## Publishing setup
 

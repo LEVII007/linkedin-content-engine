@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.1.0 — 2026-09-13 — Worked examples and grounded research
+
+- Added `skills/linkedin-draft/examples.md`: five posts Supreet published, one per observed
+  structure, each annotated with why it worked and what to copy. Reusing their sentences or
+  analogies is treated as invention.
+- Added a research step to drafting for raw or half-remembered notes: fact-check his claims, fill a
+  gap he left open, verify a borrowed concept before he maps it, and flag takes that are already
+  common.
+- Constrained research: the topic always comes from the inbox, external facts are never presented as
+  his experience, contradictions are raised before drafting instead of silently corrected, and every
+  sourced fact is shown with its link under the draft.
+- Removed build artifacts left behind by the reverted hosted app.
+
 ## 2.0.0 — 2026-09-13 — Manual Claude skill suite
 
 - Added six installable Claude skills: daily orchestration, capture, profile, draft, publish, and
