@@ -99,7 +99,12 @@ claim gets labelled `[MEASURED]`, `[OBSERVED]`, `[INFERRED]`, or `[OPINION]` in 
 labels are working notes for the reviewer, stripped from the published text. Any claim that cannot carry
 a label gets cut, not softened.
 
-Shape and voice: `references/post-shapes.md` and `references/voice.md`.
+Voice: `references/voice-supreet.md` is the active observed profile. Read it before
+`references/post-shapes.md`; it wins wherever the generic guidance disagrees.
+
+Candidate selection should prefer material only Supreet can say — a founder moment, changed belief,
+decision, or original "Weekend Pondering" idea — over another company announcement. This is a
+ranking preference, never permission to manufacture a personal story or analogy.
 
 ## Stage 4 — Approve and publish
 
@@ -155,7 +160,9 @@ Run when the user says `setup`. Six steps, in order.
    LinkedIn** product. This grants `w_member_social` with no review queue.
 4. **Run OAuth** via `scripts/linkedin_auth.py`. Scopes: `openid profile w_member_social`. Token goes to
    the system keychain, never into the repo. Access tokens last ~60 days; re-auth is manual.
-5. **Write `voice.md`** by interviewing the user — see `references/voice.md` for the questions. Ground it
+5. **Select the active voice profile.** For Supreet, use `references/voice-supreet.md`, built from
+   his real LinkedIn history. For another user, write a new profile from their samples using
+   `references/voice.md`. Ground it
    in 3–5 things they have actually written, not adjectives.
 6. **Install the four tasks.** Present the table, let the user pick which to enable. Default: all four.
    Confirm they understand task 4 only ever touches rows *they* marked `Approved`.

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.0 — 2026-09-13 — Supreet voice integration
+
+- Added `references/voice-supreet.md`, derived from 18 of Supreet's posts and his comment replies.
+- Made the observed profile authoritative over generic post-shape and formatting defaults.
+- Added content-type ranking: prefer first-hand founder reflections and original "Weekend
+  Pondering" ideas when evidence scores are comparable; rank reposts last.
+- Added Supreet's observed structures, audience, surface habits, exclusions, and public claim index
+  to the drafting checks. Public claims remain provenance and are re-verified when time-sensitive.
+- Updated setup, task prompts, operating guidance, and failure modes to load the profile explicitly.
+
 ## 1.0.0 — 2026-09-10 — Synthio fork
 
 Forked from [backpropagation6/claude-linkedin-automation](https://github.com/backpropagation6/claude-linkedin-automation)

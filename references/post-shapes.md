@@ -5,6 +5,10 @@ Pick the shape that fits the material. Never force material into a shape.
 If none of these fits, write it plainly without a shape. A shape is a convenience, not a
 requirement — and "it didn't fit a template" is not a reason to change the content.
 
+For Supreet, read `references/voice-supreet.md` first. Its observed structures and formatting
+patterns override this generic file. Use the shapes below only when none of his observed structures
+fits the source material.
+
 ---
 
 ## 1. The wrong assumption

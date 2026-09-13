@@ -94,10 +94,11 @@ nothing in between.
 - **Comment replies are very short and warm.** "Thanks Sewa! Couldn't agree more" / "Shribhagwan cool
   stuff!" / "Congratulations Patrick, and a beautiful post! 🎉" Never a paragraph.
 
-## 6. Fact pack — claims he already makes publicly
+## 6. Public claim index
 
-Reusable without re-verification only because he has already published them. Anything not on this
-list needs evidence before it enters a draft.
+These claims appeared in his LinkedIn history and can help enrichment find the original source.
+The old post is provenance, not a permanent truth: re-check time-sensitive counts, customer status,
+product availability, and current names before reuse. Anything not on this list also needs evidence.
 
 - 5 of the Top 10 global pharma companies are customers/partners
 - `$5M` seed — Elevation Capital, Peak XV, Y Combinator, 1984 Ventures, Pioneer Fund

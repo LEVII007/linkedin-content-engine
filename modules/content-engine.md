@@ -18,6 +18,11 @@ Two to five posts a month of genuinely specific, verifiable material outperforms
 calendar filler — on reach, and by a much wider margin on how you are perceived by the small number
 of people who actually matter to the business.
 
+For Supreet, do not distribute those posts evenly by category. His own LinkedIn history shows that
+founder reflections and first-hand stories outperform routine product posts by roughly 3–5x. Prefer
+`PERSONAL` and `PONDERING` candidates when their evidence scores are comparable. Milestones remain
+useful when there is real news; reposts should not consume the limited drafting slot.
+
 ## When the queue is dry
 
 Task 3 will DM "nothing above the bar this week." Correct responses, in order of preference:
@@ -85,7 +90,9 @@ own and optimizing them directly is how this becomes a slop generator again.
 | Same finding posted twice | Dedup matched on wording, not substance | Widen the dedup pass; it compares findings, not strings |
 | Nothing for a month | Empty inbox | Capture habit, not threshold |
 | A number could not be sourced post-hoc | Enrichment recorded a figure without `Provenance` | Enrichment bug. `Evidence` without `Provenance` is invalid. |
-| Reviewer keeps rewriting heavily | `voice.md` is built from adjectives, not samples | Rebuild it from 3–5 real writing samples |
+| Reviewer keeps rewriting heavily | The active voice profile is missing or was treated as optional | Read `voice-supreet.md` before generic shapes; update it from Supreet's edits |
+| Draft sounds like an engineer, not the CEO | Internal implementation detail won selection | Reframe around Supreet's decision, changed belief, buyer impact, or do not draft it |
+| Feed becomes product announcements | Candidate ranking ignored content type | Prefer `PERSONAL`/`PONDERING` when scores are close; rank `REPOST` last |
 | Token expired mid-week | Skipped the T-7 warning | Task 4 warns at 7 days; re-run `linkedin_auth.py` |
 | Post published without approval | Should be impossible | Stop task 4 immediately and audit. `--i-am-approved` plus a `Status=Approved` read are the only path. |
 | Token lapsed on a quiet week | Task 4 exited before the expiry check | Fixed — the check is step 0, ahead of the no-rows exit |

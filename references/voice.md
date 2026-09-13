@@ -29,9 +29,10 @@ description, a doc intro, a reply to a customer. Then extract observable pattern
 Write down what you observe, with a quoted example per pattern. Replace this section with the
 result at setup. Patterns beat adjectives because they are checkable against a draft.
 
-## Defaults that apply regardless
+## Generic defaults for a new profile
 
-These come from the pipeline's own constraints, not from taste.
+Use these only until an observed profile exists. Once one exists, keep only rules it supports.
+They do not override `references/voice-supreet.md`.
 
 1. **Lead with the finding.** The first 140 characters are all most people see. If the finding is
    "PubMed author matching was measuring how common a name is", that goes first — not the setup.

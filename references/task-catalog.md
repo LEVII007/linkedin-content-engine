@@ -9,6 +9,7 @@ Four tasks. Placeholders in `{{BRACES}}` are filled at setup.
 | `{{QUEUE_DB}}` | Notion Content Queue database id |
 | `{{REPO_ROOTS}}` | Directories to search for code evidence |
 | `{{DM_TARGET}}` | Slack user id to DM drafts to |
+| `{{VOICE_PROFILE}}` | Active observed voice profile (`references/voice-supreet.md`) |
 
 Upstream had ten tasks. Six are gone: daily-post (unattended publishing), daily-engagement
 (auto-likes/comments), reply-to-replies, dm-prep, news-scout (topic invention), experiment-audit
@@ -107,14 +108,25 @@ One line: "enriched N (S sourced, B blocked, A archived)". Post nothing to Slack
 
 ```
 Score {{USER_NAME}}'s sourced candidates and draft only those that clear the bar. You are
-allowed — expected — to produce nothing. Read references/post-shapes.md, references/voice.md,
-and references/epistemic-gate.md first.
+allowed — expected — to produce nothing. Read {{VOICE_PROFILE}},
+references/epistemic-gate.md, and references/post-shapes.md first, in that order.
+{{VOICE_PROFILE}} is authoritative wherever the generic post shapes disagree with it.
 
 SCORING
 For every Status=Sourced row, score 1-5 on each axis and write "e/n/s" into Score:
   e = evidence strength (from enrich)
   n = non-obviousness — would a competent practitioner already know this? 5 = genuinely surprising
   s = standing — can {{USER_NAME}} specifically say this from their own work? 5 = nobody else has this data
+
+Then classify Content type as one of:
+  PERSONAL — a first-hand founder moment, changed belief, decision, or observation
+  PONDERING — an idea from {{USER_NAME}} that can be mapped honestly to enterprise AI/pharma
+  MILESTONE — product, company, customer, funding, team, or event news
+  MICRO — one short, specific take
+  REPOST — primarily repeats another account's material
+
+Rank PERSONAL and PONDERING above MILESTONE when scores are otherwise close. Rank REPOST last.
+This is a selection rule, not permission to invent a personal story or analogy.
 
 THRESHOLD: all three >= 3 AND e >= 4.
 
@@ -123,8 +135,10 @@ raise it. Do NOT draft them. Do NOT lower the threshold because the queue is thi
 is a correct zero-post week, not a reason to publish filler.
 
 DRAFTING (top-scoring row only; at most 2 if two both score 4+ on every axis)
-1. Pick the shape from post-shapes.md that fits the material. Do not force a shape.
-2. Write in plain text. LinkedIn renders no markdown. Front-load the first 140 characters.
+1. Pick an observed structure from {{VOICE_PROFILE}} that fits the material. Use a generic shape
+   from post-shapes.md only if none fits. Never manufacture a reversal, analogy, or scene.
+2. Write in plain text. LinkedIn renders no markdown. Make the first 140 characters work as the
+   setup, reversal, or scene in {{USER_NAME}}'s observed style.
 3. Every factual claim must trace to a specific item in Evidence. If a sentence has no backing
    line in Evidence, delete the sentence.
 4. Run the epistemic gate. Label each claim [MEASURED], [OBSERVED], [INFERRED], or [OPINION] in
@@ -134,6 +148,9 @@ DRAFTING (top-scoring row only; at most 2 if two both score 4+ on every axis)
    If a blocker cannot be fixed without gutting the post, return the row to Sourced and say why.
    WARN findings are advisory; mention them in the DM and let the reviewer decide.
 6. Write Draft. Set Status=Draft.
+7. Run the draft checklist in {{VOICE_PROFILE}}. Treat it as a fit check, not a box-filling
+   instruction: never add an unsupported number, story, analogy, invitation, emoji, or hashtag
+   merely to satisfy the profile.
 
 NOTIFY
 DM {{DM_TARGET}} with the draft text inline, its Score, its evidence list, and the Notion row

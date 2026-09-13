@@ -65,7 +65,8 @@ Then in Claude Code:
 ```
 
 Setup walks through: creating `#content-inbox`, creating the Notion queue, creating the LinkedIn app,
-OAuth, building `voice.md` from your real writing samples, and installing the tasks.
+OAuth, selecting the observed voice profile, and installing the tasks. Supreet's profile is already
+built from 18 of his own posts and his comment replies.
 
 ## Publishing
 
@@ -98,7 +99,8 @@ post the comments yourself.
 | `references/substance-retrieval.md` | Where to find evidence and how to record provenance |
 | `references/epistemic-gate.md` | Claim labelling, seven checks |
 | `references/post-shapes.md` | Five shapes that work, six anti-shapes |
-| `references/voice.md` | How to build a voice file from real samples |
+| `references/voice.md` | How to build a voice profile from real samples |
+| `references/voice-supreet.md` | Active profile: audience, structures, habits, public claim index, draft checklist |
 | `references/publishing-api.md` | Auth, scopes, payloads, token lifetime |
 | `references/task-catalog.md` | Full prompts for the four tasks |
 | `scripts/validate_draft.py` | Pre-review safety check — secrets, PII, clinical identifiers |
