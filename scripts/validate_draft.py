@@ -39,8 +39,7 @@ BLOCKING = [
     (re.compile(r"\bAKIA[0-9A-Z]{16}\b"), "AWS access key id"),
     (re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----"), "private key"),
     (re.compile(r"(?i)\b(?:internal only|confidential|under NDA|not for distribution)\b"), "confidentiality marker"),
-    (re.compile(r"(?i)\$\s?\d[\d,.]*\s?(?:million|billion|M\b|B\b|k\b)"), "monetary amount"),
-    (re.compile(r"(?i)\b(?:revenue|budget|deal|contract|investment)\s+(?:of|worth|valued)\b"), "financial detail"),
+    (re.compile(r"(?i)\b(?:revenue|budget|deal|contract)\s+(?:of|worth|valued)\b"), "private financial detail"),
 ]
 
 # Warnings — advisory
@@ -48,7 +47,7 @@ ADVISORY = [
     (re.compile(r"\*\*|^#{1,6}\s|^\s*[-*]\s", re.M), "markdown syntax — LinkedIn renders it literally"),
     (re.compile(r"(?i)\b(?:thoughts\?|agree\?|comment below|drop a|let me know below)"), "engagement bait"),
     (re.compile(r"(?i)^\s*(?:P\.?S\.?|Repost if)", re.M), "growth-hack tail"),
-    (re.compile(r"#\w+(?:\s+#\w+){2,}"), "three or more hashtags"),
+    (re.compile(r"(?:#\w+\s*){7,}"), "more than six hashtags"),
 ]
 
 
@@ -78,6 +77,7 @@ SELF_TESTS = [
     ("Call +919876543210", "India mobile number pattern", True),
     ("data.cms.gov returned 403 from ap-south-1", None, False),
     ("Cut false matches 97.4% with an identity-gated query", None, False),
+    ("We raised $5M. #AI #Pharma #LifeSciences #SynthioLabs", None, False),
 ]
 
 

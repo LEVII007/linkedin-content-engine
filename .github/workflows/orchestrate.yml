@@ -1,0 +1,60 @@
+name: LinkedIn content engine
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+concurrency:
+  group: linkedin-content-engine
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ vars.SLACK_CHANNEL_ID }}
+      SLACK_APPROVER_USER_ID: ${{ vars.SLACK_APPROVER_USER_ID }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+      LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+      LINKEDIN_PERSON_URN: ${{ vars.LINKEDIN_PERSON_URN }}
+      LINKEDIN_TOKEN_EXPIRES_AT: ${{ vars.LINKEDIN_TOKEN_EXPIRES_AT }}
+      PUBLISH_ENABLED: ${{ vars.PUBLISH_ENABLED }}
+      MAX_DRAFTS_PER_RUN: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: python -m pip install -e .
+
+      - name: Test
+        run: python -m unittest discover -s tests -v
+
+      - name: Check deployment configuration
+        id: config
+        shell: bash
+        run: |
+          if [[ -n "$SLACK_BOT_TOKEN" && -n "$SLACK_CHANNEL_ID" &&
+                -n "$SLACK_APPROVER_USER_ID" && -n "$ANTHROPIC_API_KEY" ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Setup incomplete; tests passed but orchestration was skipped."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run orchestration
+        if: steps.config.outputs.ready == 'true'
+        run: linkedin-engine run

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0 — 2026-09-13 — Deployable Slack orchestration
+
+- Replaced the prompt-only Notion pipeline with an executable Python package.
+- Added Slack polling for private scratch-pad messages, thread context, edit requests, and
+  approver-specific ✅ reactions.
+- Added private GitHub Issues as durable workflow state; Supreet never needs to open GitHub.
+- Added Anthropic drafting grounded in `voice-supreet.md`, with a one-question context loop.
+- Added official LinkedIn API publishing and a `publishing` state that prevents blind duplicate
+  retries after ambiguous failures.
+- Added GitHub Actions orchestration every 30 minutes, concurrency protection, one-time token
+  renewal warnings, setup scripts, Slack app manifest, and 11 unit tests.
+- Publishing ships disabled and requires explicit LinkedIn OAuth plus `PUBLISH_ENABLED=true`.
+
 ## 1.1.0 — 2026-09-13 — Supreet voice integration
 
 - Added `references/voice-supreet.md`, derived from 18 of Supreet's posts and his comment replies.
