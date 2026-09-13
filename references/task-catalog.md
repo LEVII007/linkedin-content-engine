@@ -143,8 +143,9 @@ DRAFTING (top-scoring row only; at most 2 if two both score 4+ on every axis)
    line in Evidence, delete the sentence.
 4. Run the epistemic gate. Label each claim [MEASURED], [OBSERVED], [INFERRED], or [OPINION] in
    the Labels field. A claim that cannot carry a label gets cut, not hedged.
-5. Run scripts/validate_draft.py on the draft text. Any BLOCK finding must be fixed before the
-   draft goes anywhere — these are leaked secrets, personal data, or confidentiality markers.
+5. Run skills/linkedin-draft/scripts/validate_draft.py on the draft text. Any BLOCK finding must be
+   fixed before the draft goes anywhere — these are leaked secrets, personal data, or confidentiality
+   markers.
    If a blocker cannot be fixed without gutting the post, return the row to Sourced and say why.
    WARN findings are advisory; mention them in the DM and let the reviewer decide.
 6. Write Draft. Set Status=Draft.

@@ -57,9 +57,27 @@ needs the same evidence retrieval in stage 2, and it does not get a scoring bonu
 **Confidentiality filter, applied at ingest.** Passive sources contain things that must never become
 posts. Drop, without recording: customer and prospect names, anything said under NDA, pricing and
 contract terms, unannounced roadmap, individual performance discussion, and any patient-related or
-clinical data. When a genuinely interesting finding is entangled with a customer's identity, keep the
-finding and strip the identity — "a large oncology network", never the name. If it cannot be
-de-identified, drop it.
+clinical data. An internal number is usable only when a named artifact records it with a date range.
+A per-customer operational metric also needs the customer's clearance, even when the customer is not
+named. “One customer” is not de-identification when the publicly known customer set is narrow. Never
+invent a descriptor such as “a large oncology network” to make a customer publishable. If a finding
+cannot be separated from customer identity without invention, drop it.
+
+## Local-file queue schema
+
+Each file in `~/.linkedin-content/inbox/` has YAML frontmatter:
+
+```yaml
+id: <short-id>
+status: new
+blocked_on:
+captured: <ISO timestamp>
+source: claude
+```
+
+Valid statuses are `new`, `blocked`, and `drafted`. A blocked idea stays in the inbox but is skipped
+by drafting until Supreet supplies what `blocked_on` asks for. When it is resolved, clear
+`blocked_on` and return it to `status: new`.
 
 ## Notion queue schema
 

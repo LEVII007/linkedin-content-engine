@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Update Supreet's profile
 
-The private profile is `~/.linkedin-content/profile.md`. The installer seeds it from the full
-observed profile built from Supreet's real posts. `supreet-profile.md` beside this file is a compact
-fallback only.
+The private profile is `~/.linkedin-content/profile.md`. Its single bundled source is
+`<this-skill-directory>/../../references/voice-supreet.md`, the full observed profile built from
+Supreet's real posts.
 
 ## Commands
 
@@ -17,7 +17,8 @@ fallback only.
 When invoked with `setup`:
 
 1. Create `~/.linkedin-content/`, `inbox/`, `drafts/`, and `posted/`.
-2. If `profile.md` does not exist, copy the bundled fallback there and add
+2. If `profile.md` does not exist, copy
+   `<this-skill-directory>/../../references/voice-supreet.md` there and add
    `## Notes supplied by Supreet`.
 3. Never overwrite an existing profile.
 4. Report the created paths.

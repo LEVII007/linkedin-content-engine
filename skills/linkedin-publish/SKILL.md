@@ -20,7 +20,7 @@ When invoked with `setup`:
 4. Execute:
 
 ```bash
-python <this-skill-directory>/scripts/linkedin_auth.py
+python3 <this-skill-directory>/scripts/linkedin_auth.py
 ```
 
 Supreet completes the consent screen himself. The access token is stored in the macOS keychain, not
@@ -42,7 +42,7 @@ in the repo or content workspace.
    temporary file and execute:
 
 ```bash
-python <this-skill-directory>/scripts/linkedin_publish.py \
+python3 <this-skill-directory>/scripts/linkedin_publish.py \
   --text-file <temporary-file> \
   --i-am-approved
 ```

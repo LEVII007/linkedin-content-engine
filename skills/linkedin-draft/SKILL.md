@@ -12,48 +12,82 @@ Workspace:
 - profile: `~/.linkedin-content/profile.md`
 - ideas: `~/.linkedin-content/inbox/*.md`
 - drafts: `~/.linkedin-content/drafts/*.md`
-
-Voice reference, read before writing: `examples.md` in this skill directory — five posts Supreet
-actually published, each annotated with what to copy.
+- posted: `~/.linkedin-content/posted/*.md`
 
 ## Steps
 
 1. If the workspace or profile is missing, tell Supreet to run `/linkedin-profile setup`.
-2. Select the named idea, or the oldest idea with `status: new`. Never invent a topic when the inbox
-   is empty.
-3. Read the whole idea, its added context, and the profile.
-4. Classify the material:
-   - `PERSONAL`: founder moment, changed belief, decision, first-hand observation
-   - `PONDERING`: Supreet's own outside-in idea that maps honestly to enterprise AI/pharma
-   - `MILESTONE`: real company/product/team/event news
-   - `MICRO`: one short specific take
-5. Check substance before writing:
+2. Read these before selecting a structure:
+   - `examples.md` in this skill directory for five real posts and their observed structures
+   - `~/.linkedin-content/profile.md` for Supreet's voice, private notes, and public claim index
+   - `<this-skill-directory>/../../references/epistemic-gate.md` for per-claim labels and evidence
+     rules
+   - `<this-skill-directory>/../../references/idea-inbox.md` for confidentiality and blocked-item
+     rules
+   The profile wins over generic voice rules. For surface habits, the register-specific examples
+   and rules in the profile win over any general checklist.
+3. Select the named idea only if it has `status: new`, or select the oldest new idea. Skip `blocked`,
+   `drafted`, and all other statuses. Never invent a topic when the inbox is empty.
+4. Read the whole idea and its added context.
+5. Check substance and confidentiality before research:
    - What exactly happened or what does Supreet believe?
    - Why can he specifically say it?
    - Which details are public?
    - What is still missing?
-6. Research the idea on the web. His notes will often be raw, half-finished, or from memory, so this
-   step exists to make the post more informed — never to change what it is about. See
-   [Research rules](#research-rules).
-7. If one important detail is still missing, ask one short question. Append his answer verbatim
-   under `# Added context`, then continue. If the material remains shallow, stop and leave it `new`.
-8. Draft one idea only. Use an observed structure that the material genuinely supports:
+   Apply the confidentiality filter now. An internal number needs a named dashboard, query, or other
+   artifact with its date range. A per-customer operational metric also needs that customer's
+   clearance, even when unnamed. “One customer” is not de-identification when the public customer
+   set is narrow. Never invent a descriptor to make a customer publishable. If a check fails, go to
+   the no-draft path in step 14.
+6. Research and check prior posts before classification. Scale the work to the apparent material:
+   - first-hand personal story: zero or one search, only for a factual claim that needs checking
+   - outside-in pondering: two to four searches, enough to verify the outside idea and commonness
+   - milestone: one to three searches, focused on the announcement and any stated fact
+   Research never upgrades a thin idea. Check `~/.linkedin-content/posted/` for the same underlying
+   point. See [Research rules](#research-rules).
+7. Classify on two separate axes after research:
+   - source type: `PERSONAL` for first-hand moments, decisions, or changed beliefs; `PONDERING` for
+     an outside-in idea; `MILESTONE` for real company, product, team, or event news
+   - register: `MICRO` for one short, self-contained take; `ESSAY` only when the supplied material
+     supports a developed argument
+   A note can be `PONDERING + MICRO`. Research volume never changes the register. Material that only
+   supports a micro post stays micro.
+8. Report every contradiction and blocker before drafting; this reporting has no numerical limit.
+   If context is missing, ask at most one short question. Append the answer verbatim under
+   `# Added context`, then repeat steps 5–7. If the answer could change the source type or register,
+   do not proceed without it. If the material remains shallow, use the no-draft path.
+9. Draft one idea only. Use a structure that the source type and register support:
    - setup → reversal
+     requires `PERSONAL` material for the belief or advice being reversed
    - outside idea explained correctly → enterprise/pharma implication
+     is the normal `PONDERING + ESSAY` structure
    - concrete scene → claim
+     requires `PERSONAL` first-hand material
    - two-column judgment
+     requires a real judgment Supreet supplied
    - 2–4 line micro post
-9. Never manufacture the structure. No invented scene, analogy, quote, number, customer, or feeling.
-   Do not reuse sentences, openings, or analogies from `examples.md`.
-10. Match his observed surface habits: deliberate emoji, short emphasis fragments, and 4–6 relevant
-    hashtags. Do not add these if they make the post less natural.
-11. Write the final post to a temporary file and execute:
+     fits any source type when the thought is complete without build-up
+   Milestones may state the news directly. Never manufacture a structure, scene, analogy, quote,
+   number, customer, or feeling.
+10. Do not reuse sentences, openings, or analogies from `examples.md` or from any page found during
+    research. Short discourse markers listed in the profile, such as “Here's the thing:”, may recur;
+    they are cadence, not borrowed sentences. Never copy the clause that follows one. Match the
+    surface habits for the chosen register: essays usually use deliberate emoji and 4–6 relevant
+    hashtags; micro posts often use neither. In working notes, label every claim `[MEASURED]`,
+    `[OBSERVED]`, `[INFERRED]`, or `[OPINION]` and run all seven checks in the epistemic gate.
+    “Roughly”, “about”, and “~” do not rescue an unsupported number. Check claims of absence as
+    carefully as positive claims. A claim that cannot carry a label gets cut; a failed gate takes
+    the no-draft path.
+11. Write the post text only, without frontmatter, to a temporary file and execute:
 
 ```bash
-python <this-skill-directory>/scripts/validate_draft.py <temporary-file>
+python3 <this-skill-directory>/scripts/validate_draft.py <temporary-file>
 ```
 
-Fix blockers. Warnings require judgment; they are not automatic failures.
+Fix scanner blockers. Warnings require judgment; they are not automatic failures. A pass means only
+that this PII, secrets, confidentiality-marker, and formatting scanner found no blocker. It cannot
+detect invention, borrowed claims, thin material, unsupported numbers, or missing customer
+clearance. The earlier gates still control whether a draft is safe.
 
 12. Save:
 
@@ -64,15 +98,28 @@ status: draft
 created: <ISO timestamp>
 sources:
   - <url> — <what it supports>
+rejected_research:
+  - <url or check> — <what it contradicted or failed to confirm>
+claim_labels:
+  - <claim> — <label and provenance>
 ---
 
 <plain LinkedIn post text>
 ```
 
 13. Change the source idea to `status: drafted`.
-14. Show the entire draft. Below it, list every sourced fact with its link, and anything the research
-    contradicted or failed to confirm. Then ask what he wants changed. Do not publish. Tell him:
-    `Run /linkedin-publish when the final text is ready.`
+14. End on exactly one path:
+    - **Draft:** Show the entire draft. Below it, list every sourced fact with its link and anything
+      research rejected, contradicted, or failed to confirm. Ask what he wants changed. Do not
+      publish. Tell him: `Run /linkedin-publish when the final text is ready.`
+    - **No draft:** Change the idea to `status: blocked` and set `blocked_on: "<specific evidence,
+      confidentiality, commonness, overlap, or context needed>"`. Then report:
+
+      ```text
+      No draft.
+      Blocked on: <specific reason>
+      To unblock: <one concrete action, or "archive this idea">
+      ```
 
 ## Research rules
 
@@ -87,17 +134,24 @@ Use it for four things:
   something happened.
 - **Explain a borrowed idea correctly.** For a `PONDERING` post the outside concept must be accurate,
   because he explains it properly before mapping it.
-- **Check whether the point is already commonplace.** If ten people published the same take last
-  month, tell him. He can sharpen the angle or drop it.
+- **Check whether the point is already commonplace.** If recent posts make the materially same
+  point, especially with a closely matching opening, report the overlap before drafting, set the
+  idea to `blocked`, and stop. Supreet can sharpen the angle or archive it.
+- **Check whether Supreet already posted it.** Search `~/.linkedin-content/posted/` by underlying
+  idea, not exact wording. There is no API read access to his feed, so flag any local overlap to him
+  before drafting and stop.
 
 Hard limits:
 
 - A fact found online is never written as his own experience, customer, or result.
-- If research contradicts something he said, raise it before drafting. Never silently correct him.
+- If research contradicts something he said, report every contradiction before drafting and stop.
+  Never silently correct him.
 - If a claim cannot be verified, either cut it or attribute it to what he actually knows.
 - Do not add statistics to make a post sound authoritative. Every number must earn its place.
-- Public sources only. Nothing behind a login, and nothing from internal systems.
-- Cap it at a few searches. This is verification, not a literature review.
+- Public sources only. Supreet's own LinkedIn profile and posts are allowed as first-party
+  provenance even when LinkedIn requires login. No other gated source and nothing from internal
+  systems may be used as web research.
+- Never reuse wording from a research source. Facts may be sourced; sentences may not.
 
 ## Quality bar
 

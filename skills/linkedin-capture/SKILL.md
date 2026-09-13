@@ -22,6 +22,7 @@ Supreet's private scratch pad is `~/.linkedin-content/inbox/`.
 ---
 id: <short-id>
 status: new
+blocked_on:
 captured: <ISO timestamp>
 source: claude
 ---

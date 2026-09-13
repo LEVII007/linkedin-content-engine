@@ -70,6 +70,8 @@ conference, a single observation.
 
 - **Fragments for emphasis, in pairs.** "Not incrementally. Structurally." / "You own what works. You own what doesn't."
 - **Colon to set up the payoff.** "Here's the thing:" / "The mistake?" / "The question worth asking isn't..."
+  These short discourse markers may recur. They are cadence, not sentences to copy; the words that
+  follow them must be original to the current material.
 - **Second person for the buyer's experience**, first person plural for Synthio. "You'll rarely have perfect information." / "We stopped trying to convince people..."
 - **Numbers inline, in prose**, not on their own line. "5 of the top 10 global pharma companies are already building with us."
 - **Names people and thanks them by name**, often a long tagged list on milestone posts.
@@ -81,11 +83,12 @@ nothing in between.
 
 ## 5. Surface habits
 
-- **Emoji: yes, deliberately.** 1–6 per post. Two uses: as line-start bullets (🗣️ ⏱️ 🚀 ❗ ✅ →) and
-  as a beat at the end of a thought. 🚀 is his signature sign-off. A draft with zero emoji does not
-  read as him; a draft with emoji sprinkled mid-sentence also does not.
-- **Hashtags: 4–6 at the end, always.** Recurring set: `#Pharma` `#LifeSciences` `#AI` `#AgenticAI`
-  `#VoiceAI` `#PharmaCommercial` `#SynthioLabs` `#EnterpriseAI` `#FounderJourney`.
+- **Emoji: deliberate in essays, optional in micro posts.** Essays usually use 1–6, either as
+  line-start bullets (🗣️ ⏱️ 🚀 ❗ ✅ →) or as a beat at the end of a thought. 🚀 is a common
+  sign-off. Micro posts often use none. Emoji sprinkled mid-sentence do not read as him.
+- **Hashtags: usually 4–6 at the end of essays; often none on micro posts.** Recurring set:
+  `#Pharma` `#LifeSciences` `#AI` `#AgenticAI` `#VoiceAI` `#PharmaCommercial` `#SynthioLabs`
+  `#EnterpriseAI` `#FounderJourney`.
 - **Arrows `→` for example queries or lists.** "→ Which HCPs at Cleveland Clinic are actively involved in SCLC trials..."
 - **Em dashes and short parentheticals** are frequent and normal for him.
 - **Closing move** is one of three: an invitation ("drop me a note", "Would love your take if you're
@@ -124,14 +127,17 @@ Observed absences, not guesses. None of these appear in six months of posts.
 
 ## 8. Draft checklist
 
-A draft is in his voice only if all of these are true.
+A draft is in his voice only if all applicable checks are true. The micro example in
+`skills/linkedin-draft/examples.md` wins over a general surface-habit rule when they conflict.
 
 1. Does it come from something he actually said, did, or decided? If the source is a news headline, stop.
-2. Is there a reversal, an analogy, or a scene in the first three lines?
+2. For an essay, is there a reversal, an analogy, or a scene in the first three lines? For a micro
+   post, is the complete thought clear without build-up?
 3. Does it land one idea, not three?
 4. Are the numbers ones he has already published, or newly evidenced?
-5. Is there a closing invitation, punch line, or thanks — and at least one emoji, used as a bullet or a beat?
-6. Are there 4–6 hashtags from his usual set?
+5. Does an essay have a closing invitation, punch line, or thanks, with deliberate emoji where
+   natural? A micro post may end directly and use no emoji.
+6. Does an essay have 4–6 relevant hashtags? A micro post may have none.
 7. Would a VP at a Top 10 pharma read this and think "he has been in my building"?
 
 ## 9. Conflicts with the generic rules in this repo
@@ -142,8 +148,8 @@ disagree:
 
 | Generic rule | Reality for Supreet |
 |---|---|
-| "No emoji" implied; emoji listed as a thing to check for | He uses emoji in almost every post, as structure |
-| "Hashtags: at most two, usually zero" | He uses 4–6, every time |
+| "No emoji" implied; emoji listed as a thing to check for | Essays usually use deliberate emoji; micro posts may use none |
+| "Hashtags: at most two, usually zero" | Essays usually use 4–6; micro posts may use none |
 | "Numbers get their own line" | He writes numbers inline, in prose |
 | "No engagement bait" | Correct in spirit — but his genuine invitations ("would love your take") stay |
 | "Lead with the finding" | He leads with a reversal or a scene; the finding arrives second |

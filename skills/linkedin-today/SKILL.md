@@ -24,6 +24,8 @@ Read the relevant sibling `SKILL.md` and follow it exactly. Do not improvise a s
 1. If text follows `/linkedin-today`, capture it first as a raw thought.
 2. Check `~/.linkedin-content/profile.md`. If missing, run the profile setup procedure.
 3. List inbox ideas by status:
+   - Show every blocked idea with its `blocked_on` reason and the action that would return it to
+     `status: new`. Do not select it while blocked.
    - If there are new ideas, select the oldest strong one.
    - If there are several equally strong ideas, prefer a personal founder moment or “Weekend
      Pondering” idea over a routine product announcement.

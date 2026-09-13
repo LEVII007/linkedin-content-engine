@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.2.0 — 2026-09-14 — Conservative drafting gates
+
+- Made drafting load the epistemic gate, confidentiality rules, full voice profile, public claim
+  index, and real examples before choosing a structure.
+- Split source type from length register. Thin thoughts now stay micro, first-hand stories get
+  minimal research, and contradictions, commonplace angles, and prior-post overlap stop drafting.
+- Added local `blocked` ideas with specific `blocked_on` reasons. Draft selection skips them,
+  capture initializes the field, and `/linkedin-today` surfaces what Supreet can unblock.
+- Added explicit protection for internal and per-customer metrics. Numbers need a named artifact,
+  customer metrics need clearance, and narrow customer sets cannot be hidden with invented labels.
+- Made emoji and hashtag habits conditional on register. Essays usually carry them; micro posts may
+  use neither, as Supreet's published examples show.
+- Consolidated draft validation into the skill copy. It now uses `python3`, ignores YAML
+  frontmatter, prints an explicit pass result, and states the narrow limits of a clean scan.
+- Made the full observed profile the only setup source and removed the degraded duplicate.
+
 ## 2.1.0 — 2026-09-13 — Worked examples and grounded research
 
 - Added `skills/linkedin-draft/examples.md`: five posts Supreet published, one per observed
@@ -108,7 +124,8 @@ better-engineered take on the same problem — real Python, tests, official `ugc
 automation. Its topic source is RSS feeds and GitHub releases, which is the wrong input here, but two
 pieces were worth taking:
 
-- **`scripts/validate_draft.py`** — PII and secret patterns adapted from its `src/drafts/validator.py`,
+- **`skills/linkedin-draft/scripts/validate_draft.py`** — PII and secret patterns adapted from its
+  `src/drafts/validator.py`,
   retargeted from Norwegian identifiers (fødselsnummer, org number) to this context: medical record
   numbers, provider NPIs, patient identifiers, India and US phone formats, AWS keys, private keys.
   Its 41-phrase banned-vocabulary list was **not** taken — policing words does not fix a shallow topic.
