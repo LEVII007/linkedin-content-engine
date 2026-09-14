@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.2 — 2026-09-14 — Report commonplace angles
+
+- Limited outside-overlap blocking to one identifiable post with the same core claim and the same
+  opening or supporting structure. Other overlap is now reported above a draft with source links.
+- Kept Supreet's prior-post gate unchanged and made the ban on reusing researched wording prominent.
+
 ## 2.2.1 — 2026-09-14 — Complete investigation before drafting
 
 - Made confidentiality failures stop drafting without stopping research. The blocked result now
