@@ -2,6 +2,9 @@
 
 The only source of topics. If it is not in here, it does not get written about.
 
+Live capture is Slack `#linkedin-inbox`, mirrored to `~/.linkedin-content/inbox/`.
+Drafts for approval go to Slack `#linkedin-approvals`. See `references/slack.md`.
+
 ## Why a raw inbox and not a calendar
 
 A calendar creates seven slots a week and demands they be filled. Nobody has seven real things to say in

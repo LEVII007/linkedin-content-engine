@@ -18,4 +18,8 @@ If the argument itself looks like a raw idea rather than a command, capture it f
 `Saved. Want me to draft it now?`
 
 Never publish in the same step as capture. Supreet must see the complete final draft and explicitly
-approve that exact version.
+approve that exact version, in Claude or as `Publish this exact text` in the Slack approvals thread.
+
+Ideas live in the Slack inbox channel. Drafts for approval go to the Slack approvals channel.
+Read `<this-skill-directory>/../../references/slack.md` and `~/.linkedin-content/slack.md`.
+Use the connected Slack plugin.

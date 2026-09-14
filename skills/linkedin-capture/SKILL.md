@@ -6,7 +6,11 @@ disable-model-invocation: true
 
 # Capture a thought
 
-Supreet's private scratch pad is `~/.linkedin-content/inbox/`.
+Supreet dumps ideas in Slack `#linkedin-inbox` (see `~/.linkedin-content/slack.md`).
+Mirror every capture to `~/.linkedin-content/inbox/` so drafting can track status.
+
+Read `<this-skill-directory>/../../references/slack.md` and use the connected Slack plugin.
+If Slack is not connected, save locally and say so.
 
 ## Steps
 
@@ -25,6 +29,8 @@ status: new
 blocked_on:
 captured: <ISO timestamp>
 source: claude
+slack_ts:
+slack_permalink:
 ---
 
 # Raw thought
@@ -34,7 +40,9 @@ source: claude
 # Added context
 ```
 
-6. Reply with one line: `Saved. Add more with /linkedin-capture anytime.`
+6. Post the same verbatim thought to the inbox Slack channel. Write `slack_ts` and
+   `slack_permalink` back into the local file.
+7. Reply with one line: `Saved to Slack and local inbox. Add more in #linkedin-inbox anytime.`
 
 If Supreet gives a link, preserve both the link and his words about why it matters. A bare link is
 not enough; ask what caught his attention.

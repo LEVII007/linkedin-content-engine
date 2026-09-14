@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0 — 2026-09-14 — Slack inbox and approval channels
+
+- Ideas now live in Slack `#linkedin-inbox` and drafts go to `#linkedin-approvals`, using whatever
+  Slack plugin is already connected to Claude or Codex. Channel names are in
+  `~/.linkedin-content/slack.md`.
+- Local inbox and draft files remain the status store. Slack is not a substitute for the
+  LinkedIn publish gate.
+
 ## 2.2.2 — 2026-09-14 — Report commonplace angles
 
 - Limited outside-overlap blocking to one identifiable post with the same core claim and the same

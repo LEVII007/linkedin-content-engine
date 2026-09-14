@@ -25,7 +25,7 @@ Restart Claude Code after installation.
 Flow:
 
 ```text
-saved thought → one useful follow-up → web fact-check → draft → Supreet edits or approves → optional publish
+Slack #linkedin-inbox (or /linkedin-capture) → draft → Slack #linkedin-approvals → optional LinkedIn publish
 ```
 
 If there is nothing worth posting, the skill says so. It never fills a calendar slot.
@@ -38,7 +38,16 @@ Supreet can save a thought at any time:
 /linkedin-capture enterprise AI adoption feels like latent heat
 ```
 
-Claude stores the exact words under `~/.linkedin-content/inbox/`. It does not rewrite them.
+Claude posts the exact words to Slack `#linkedin-inbox` and mirrors them under
+`~/.linkedin-content/inbox/`. It does not rewrite them.
+
+He can also dump the thought straight into `#linkedin-inbox`. `/linkedin-today` and
+`/linkedin-draft` pull new messages from that channel.
+
+Drafts are posted to `#linkedin-approvals`. Approve with a thread reply of
+`Publish this exact text`. Change the channel names in `~/.linkedin-content/slack.md` if needed.
+This uses the Slack plugin already connected to Claude or Codex. There is no custom Slack app in
+this repo. If Slack is not connected, the skills keep working on local files and say so.
 
 He can also use the main command:
 

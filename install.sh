@@ -60,5 +60,13 @@ else
   echo "Kept existing private profile at $PROFILE"
 fi
 
+SLACK="$HOME/.linkedin-content/slack.md"
+if [[ ! -e "$SLACK" ]]; then
+  cp "$ROOT/references/slack-channels.md" "$SLACK"
+  echo "Created Slack channel config at $SLACK"
+else
+  echo "Kept existing Slack channel config at $SLACK"
+fi
+
 echo
 echo "Ready. Start Claude Code and run: /linkedin-today"

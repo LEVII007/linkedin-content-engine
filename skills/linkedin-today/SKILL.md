@@ -19,11 +19,16 @@ The installed sibling skills are:
 
 Read the relevant sibling `SKILL.md` and follow it exactly. Do not improvise a second workflow.
 
+Slack: read `<this-skill-directory>/../../references/slack.md`. Ideas live in the inbox
+channel. Finished drafts go to the approvals channel. Use the connected Slack plugin. If Slack
+is missing, continue locally and say so.
+
 ## Daily flow
 
 1. If text follows `/linkedin-today`, capture it first as a raw thought.
 2. Check `~/.linkedin-content/profile.md`. If missing, run the profile setup procedure.
-3. List inbox ideas by status:
+3. Sync ideas from the Slack inbox channel into `~/.linkedin-content/inbox/` (verbatim, skip
+   already mirrored messages). Then list inbox ideas by status:
    - Show every blocked idea with its `blocked_on` reason and the action that would return it to
      `status: new`. Do not select it while blocked.
    - If there are new ideas, select the oldest strong one.
@@ -33,6 +38,7 @@ Read the relevant sibling `SKILL.md` and follow it exactly. Do not improvise a s
 4. Follow the drafting skill. It checks his facts on the web and fills gaps before writing. Ask at
    most one missing-context question at a time.
 5. Show the full draft, followed by the sources used and anything research could not confirm.
+   Also post that same package to the Slack approvals channel.
 6. Ask what Supreet wants:
    - revise
    - save for later

@@ -23,8 +23,10 @@ Workspace:
    - `<this-skill-directory>/../../references/epistemic-gate.md` for claim evidence
    - `<this-skill-directory>/../../references/idea-inbox.md` for confidentiality and blocked items
    The profile controls voice, register, and surface habits.
-3. Select the named `status: new` idea, or the oldest new idea. Skip every other status. Never invent
-   a topic when the inbox is empty.
+3. Sync new messages from the Slack inbox channel into `~/.linkedin-content/inbox/` using
+   `<this-skill-directory>/../../references/slack.md` and the connected Slack plugin. Then select
+   the named `status: new` idea, or the oldest new idea. Skip every other status. Never invent a
+   topic when the inbox is empty.
 4. Read the whole idea and its added context.
 5. Identify what happened or what Supreet believes, why he can say it, what is public, and what is
    missing. Apply the confidentiality filter. Record failures, but finish step 6 before blocking.
@@ -109,9 +111,9 @@ claim_labels:
     - **Draft:** If research found a side contradiction or outside overlap, first show
       `Contradictions, cuts, and overlaps`. Name the exact cut and why it is false, or the shared core
       claim, with source links. Then show the entire draft.
-      Below it, list sourced facts and rejected or unconfirmed research with links. Ask what he wants
-      changed. Do not publish. Tell him:
-      `Run /linkedin-publish when the final text is ready.`
+      Below it, list sourced facts and rejected or unconfirmed research with links. Post the same
+      package to the Slack approvals channel. Ask what he wants changed. Do not publish. Tell him:
+      `Approve in the Slack thread, or run /linkedin-publish when the final text is ready.`
     - **No draft:** Change the idea to `status: blocked` and set `blocked_on: "<specific evidence,
       confidentiality, contradiction, near-identical overlap, or context needed>". Include every
       blocker and contradiction found during investigation. Then report:
