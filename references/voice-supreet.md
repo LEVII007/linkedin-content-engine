@@ -90,7 +90,10 @@ nothing in between.
   `#Pharma` `#LifeSciences` `#AI` `#AgenticAI` `#VoiceAI` `#PharmaCommercial` `#SynthioLabs`
   `#EnterpriseAI` `#FounderJourney`.
 - **Arrows `→` for example queries or lists.** "→ Which HCPs at Cleveland Clinic are actively involved in SCLC trials..."
-- **Em dashes and short parentheticals** are frequent and normal for him.
+- **Short parentheticals** are normal for him. **Em dashes are rare** — one use across 52 lines of
+  his real posts, and it was a paired aside ("And then — almost suddenly — the whole state flips"),
+  never the single pivot dash that LLMs reach for. The validator flags every dash as a phrasing
+  note. Keep one only when it is a deliberate paired aside; otherwise use a full stop.
 - **Closing move** is one of three: an invitation ("drop me a note", "Would love your take if you're
   in the room for these vendor conversations", "Send us 5 NPIs"), a short punch line ("The white coat
   had a point.", "Agency > Pedigree (Period)"), or gratitude plus 🚀.
@@ -152,6 +155,7 @@ disagree:
 | "Hashtags: at most two, usually zero" | Essays usually use 4–6; micro posts may use none |
 | "Numbers get their own line" | He writes numbers inline, in prose |
 | "No engagement bait" | Correct in spirit — but his genuine invitations ("would love your take") stay |
+| "Banned phrase lists" | None. The validator's SLOP tier flags phrasing, and is regression-tested against his real posts so it cannot fire on them. "Here's the thing:" is his, not filler. |
 | "Lead with the finding" | He leads with a reversal or a scene; the finding arrives second |
 | "Anti-shape: one line per paragraph" | He uses short paragraphs with blank lines, and it reads as him |
 

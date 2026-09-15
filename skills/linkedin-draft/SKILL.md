@@ -84,9 +84,14 @@ Workspace:
 python3 <this-skill-directory>/scripts/validate_draft.py <temporary-file>
 ```
 
-Fix blockers and judge warnings. A pass only clears this PII, secrets,
-confidentiality-marker, and formatting scanner. It cannot detect invention, borrowed claims, thin
-material, unsupported numbers, or missing customer clearance.
+Three tiers come back. `BLOCK` must be fixed. `WARN` is a judgment call. `SLOP` means the phrasing
+reads as machine-written — **rewrite the sentence, do not just delete the flagged word**, since
+swapping one word leaves the same hollow sentence. Clear every `SLOP` note unless keeping it is
+deliberately his voice, and say which you kept and why.
+
+A pass only clears this PII, secrets, confidentiality-marker, formatting, and phrasing scanner. It
+cannot detect invention, borrowed claims, thin material, unsupported numbers, or missing customer
+clearance.
 
 12. Save:
 
