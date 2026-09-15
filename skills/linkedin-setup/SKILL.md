@@ -73,15 +73,25 @@ checked by Slack user ID, so a matching name is not enough.
 
 ## Part 3 — LinkedIn publishing
 
-This part is optional. Everything up to "here is your draft" works without it — publishing is the
-only thing that needs LinkedIn authorization.
+**Optional, and genuinely so.** There are two supported ways to get a post onto LinkedIn:
 
-The person whose account this posts to must do steps 1–3 themselves. They type their own password;
-never ask for it, and never offer to enter it.
+| | Copy and paste | The API |
+|---|---|---|
+| Setup | None. Works now. | This part, ~15 min |
+| Per post | Paste it yourself, ~20 seconds | Nothing |
+| Platform | Any | macOS only |
 
-1. **Check the Page.** LinkedIn requires a developer app to be attached to a Company Page, even for
-   posting to a personal profile. Ask whether they administer one. If not, stop here — the rest
-   cannot proceed, and that is worth knowing before spending time on it.
+Both are safe. Neither is a fallback. At a few posts a month, pasting is a perfectly sensible
+choice — say so plainly rather than steering them to the API.
+
+Ask which they want. If they pick paste, skip the rest of this part and note it in the check.
+
+The person whose account this posts to must do the steps below themselves. They type their own
+password; never ask for it, and never offer to enter it.
+
+1. **The Page.** LinkedIn requires a developer app to be attached to a Page, even for posting to a
+   personal profile. Their company Page works if they administer it. If not, they can create a
+   placeholder Page in a few minutes — no followers or content needed. This is not a blocker.
 2. **Create the app** at <https://www.linkedin.com/developers/apps>, attached to that Page. On the
    Products tab add both:
    - Sign In with LinkedIn using OpenID Connect
@@ -133,9 +143,12 @@ Read-only. Report a table of pass/fail, then a short list of what to do about ea
 | Channels readable | Read one message from each ID | Re-run `/linkedin-setup slack` |
 | Approver ID set | A `U...` id is present | Re-run `/linkedin-setup slack` |
 | Validator runs | `validate_draft.py --self-test` passes | Report the failing case; do not draft |
-| LinkedIn token | `linkedin_publish.py --check` prints a member id | Run `/linkedin-setup linkedin` |
+| LinkedIn token *(only if they chose the API)* | `linkedin_publish.py --check` prints a member id | Run `/linkedin-setup linkedin` |
 
 Never report a check as passing without actually running it.
+
+A missing LinkedIn token is **not a failure** if they chose to paste posts themselves. Report it as
+`not configured — posting by paste`, not as a problem to fix.
 
 End with the single next thing to do. If everything passes, that is:
 

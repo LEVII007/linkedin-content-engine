@@ -37,14 +37,11 @@ If you have no thoughts saved, it writes nothing and says so. That is the intend
 | Python 3.9+ | Two small scripts | `python3 --version` |
 | git | To clone this | `git --version` |
 | A Slack workspace | Where you drop ideas and approve drafts | You can post in it |
-| A LinkedIn Company Page you administer | LinkedIn requires one to create a developer app, even to post to your personal profile | Step 5 |
+| A LinkedIn Page — *only if you want automatic posting* | LinkedIn requires a developer app to be attached to one. A placeholder Page you make yourself is fine. | Step 5 |
 
-**On Linux or Windows:** everything works except publishing. The two scripts in
-`skills/linkedin-publish/scripts/` use the macOS `security` command for the keychain and would need
-changing. You would copy the final text into LinkedIn by hand.
-
-**No Company Page?** Steps 1–4 still work. You get finished drafts in Slack and paste them in
-yourself. Only automatic publishing needs the Page.
+**On Linux or Windows:** everything works except automatic posting. The two scripts in
+`skills/linkedin-publish/scripts/` use the macOS `security` command for the keychain. You would
+paste posts in yourself — which is step 5, option A, and perfectly normal.
 
 ---
 
@@ -133,15 +130,38 @@ draft. The approval applies only to that exact version of that exact post.
 
 ---
 
-## Step 5 — Connect LinkedIn *(optional)*
+## Step 5 — Choose how posts reach LinkedIn
 
-Only needed for automatic publishing. Skip it and you still get finished drafts to copy in.
+Two options. **Both are fully supported, and both are safe.** Pick one.
+
+| | **A. Paste it yourself** | **B. The API** |
+|---|---|---|
+| Setup now | None | ~15 minutes |
+| Per post | Copy, paste, click. ~20 seconds. | Nothing |
+| Works on | Any computer | macOS only |
+| Needs a LinkedIn Page | No | Yes — a placeholder is fine |
+| Risk to your account | None | None |
+
+At a few posts a month, **option A is a completely sensible choice.** You still get the finished
+post written for you and delivered to Slack; you just paste it in. Claude will show it as clean
+text with nothing extra to strip out.
+
+Pick A and you are done — skip to step 6.
+
+### What is NOT an option
+
+Letting software drive your logged-in LinkedIn in a browser. That breaks LinkedIn's User Agreement
+(§8.2) and risks your account being restricted or banned. It is not built into this, and it should
+not be added.
+
+### Option B — set up the API
 
 You must do this yourself — it is your account, and you type your own password. Nobody, Claude
 included, should ask you for it.
 
 1. Go to <https://www.linkedin.com/developers/apps> and create an app.
-2. Attach it to a Company Page you administer. LinkedIn requires this even for personal posting.
+2. Attach it to a LinkedIn Page. Your company Page works if you administer it. If not, create a
+   placeholder Page first — it takes a few minutes and needs no followers or content.
 3. On the **Products** tab, add both:
    - Sign In with LinkedIn using OpenID Connect
    - Share on LinkedIn
@@ -217,10 +237,11 @@ slack config complete     ✓
 channels readable         ✓
 approver id set           ✓
 validator self-test       ✓
-linkedin authorization    ✓
+linkedin authorization    ✓   (or "not configured — posting by paste")
 ```
 
-Anything failing comes with the one command that fixes it.
+Anything failing comes with the one command that fixes it. A missing LinkedIn authorization is not
+a failure if you chose option A.
 
 ---
 
@@ -280,7 +301,7 @@ Realistic output is a few posts a month, and some weeks none. That is the design
 | `Refusing to replace existing ...` during install | Something is already at that path. Move it, re-run `./install.sh`. |
 | Claude says Slack isn't connected | Add Slack in Claude's settings → Connectors, restart. |
 | Claude says channels aren't configured | `/linkedin-setup slack` |
-| `No LinkedIn authorization` | `/linkedin-setup linkedin` |
+| `No LinkedIn authorization` | Expected if you chose option A. Paste posts yourself, or run `/linkedin-setup linkedin`. |
 | `LinkedIn authorization expired` | Re-run step 5.6. Happens every ~60 days. |
 | Drafts sound like someone else | Your profile is still Supreet's. See step 6. |
 | "Nothing worth forcing today" | Your inbox is empty or thin. Drop more thoughts in `#linkedin-inbox`. |

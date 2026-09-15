@@ -34,8 +34,12 @@ optional but is where most of the value is.
 Flow:
 
 ```text
-Slack #linkedin-inbox (or /linkedin-capture) → draft → Slack #linkedin-approvals → optional LinkedIn publish
+Slack #linkedin-inbox (or /linkedin-capture) → draft → Slack #linkedin-approvals → paste it, or publish via the API
 ```
+
+Two supported ways to post, both safe, neither a fallback: Supreet pastes the finished text into
+LinkedIn himself (no setup), or it goes through LinkedIn's official Share API (one-time setup,
+macOS only). Browser automation is not an option — it breaks LinkedIn's User Agreement.
 
 If there is nothing worth posting, the skill says so. It never fills a calendar slot.
 

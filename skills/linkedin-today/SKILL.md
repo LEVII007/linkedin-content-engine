@@ -45,6 +45,9 @@ is missing, continue locally and say so.
    - publish
 7. For revisions, update the saved draft and show the full new version again.
 8. For publish, follow the publishing skill. Approval applies only to the exact displayed version.
+   There are two supported ways to post, and both are fine: it hands him clean text to paste into
+   LinkedIn himself, or it posts through the official API if he set that up. The publishing skill
+   picks based on whether authorization exists. Never push him toward the API.
 
 ## Hard boundaries
 
