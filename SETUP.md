@@ -51,8 +51,8 @@ yourself. Only automatic publishing needs the Page.
 ## Step 1 — Install
 
 ```bash
-git clone https://github.com/LEVII007/supreet-linkedin-content-engine.git
-cd supreet-linkedin-content-engine
+git clone https://github.com/LEVII007/linkedin-content-engine.git
+cd linkedin-content-engine
 chmod +x install.sh
 ./install.sh
 ```

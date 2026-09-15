@@ -14,8 +14,8 @@ profile, and asks you only for the things it cannot look up itself.
 The short version:
 
 ```bash
-git clone https://github.com/LEVII007/supreet-linkedin-content-engine.git
-cd supreet-linkedin-content-engine
+git clone https://github.com/LEVII007/linkedin-content-engine.git
+cd linkedin-content-engine
 chmod +x install.sh
 ./install.sh
 ```
@@ -146,7 +146,7 @@ exact version. There is no unattended publishing.
 ## Update
 
 ```bash
-cd supreet-linkedin-content-engine
+cd linkedin-content-engine
 git pull
 ```
 
