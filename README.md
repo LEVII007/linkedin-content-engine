@@ -7,6 +7,12 @@ This is not a hosted app. Nothing runs in the background. Supreet runs a skill w
 
 ## Install
 
+**Setting this up for the first time? Read [SETUP.md](SETUP.md)** — or open Claude Code here and say
+`Read SETUP.md and set this up for me`. It covers Slack, LinkedIn authorization, and the voice
+profile, and asks you only for the things it cannot look up itself.
+
+The short version:
+
 ```bash
 git clone https://github.com/LEVII007/supreet-linkedin-content-engine.git
 cd supreet-linkedin-content-engine
@@ -14,7 +20,10 @@ chmod +x install.sh
 ./install.sh
 ```
 
-Restart Claude Code after installation.
+Restart Claude Code, then run `/linkedin-setup`.
+
+Requires macOS (the LinkedIn token lives in the keychain), Python 3.9+, and Claude Code. Slack is
+optional but is where most of the value is.
 
 ## The normal command
 
@@ -45,9 +54,14 @@ He can also dump the thought straight into `#linkedin-inbox`. `/linkedin-today` 
 `/linkedin-draft` pull new messages from that channel.
 
 Drafts are posted to `#linkedin-approvals`. Approve with a thread reply of
-`Publish this exact text`. Change the channel names in `~/.linkedin-content/slack.md` if needed.
-This uses the Slack plugin already connected to Claude or Codex. There is no custom Slack app in
-this repo. If Slack is not connected, the skills keep working on local files and say so.
+`Publish this exact text`.
+
+Slack uses the connector already attached to Claude — there is no Slack app in this repo, and
+nothing to deploy. `/linkedin-setup slack` records both channel IDs and the approver's Slack user
+ID into `~/.linkedin-content/slack.md`. Only that user ID can approve a post; a matching display
+name is not enough, and an emoji reaction is never approval.
+
+If Slack is not connected, the skills keep working on local files and say so.
 
 He can also use the main command:
 

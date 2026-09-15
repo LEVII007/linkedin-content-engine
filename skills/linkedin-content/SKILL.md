@@ -13,6 +13,7 @@ Choose one sibling skill and read its `SKILL.md` before acting:
 - `profile <information>`, `remember this`, or `setup profile` → `linkedin-profile`
 - `draft` or `draft <idea-id>` → `linkedin-draft`
 - `publish`, `publish <draft-id>`, or `setup publishing` → `linkedin-publish`
+- `setup`, `install`, `connect slack`, `check`, or anything broken → `linkedin-setup`
 
 If the argument itself looks like a raw idea rather than a command, capture it first, then ask:
 `Saved. Want me to draft it now?`
@@ -22,4 +23,7 @@ approve that exact version, in Claude or as `Publish this exact text` in the Sla
 
 Ideas live in the Slack inbox channel. Drafts for approval go to the Slack approvals channel.
 Read `<this-skill-directory>/../../references/slack.md` and `~/.linkedin-content/slack.md`.
-Use the connected Slack plugin.
+Use the connected Slack connector.
+
+If `~/.linkedin-content/` does not exist, or the Slack config still contains `TODO`, route to
+`linkedin-setup` first instead of guessing.

@@ -12,7 +12,7 @@ ACCOUNT = "access-token"
 MAX_CHARS = 3000
 
 
-def token() -> str:
+def token(with_expiry: bool = False):
     try:
         raw = subprocess.run(
             ["security", "find-generic-password", "-s", SERVICE, "-a", ACCOUNT, "-w"],
@@ -23,8 +23,11 @@ def token() -> str:
     except subprocess.CalledProcessError:
         sys.exit("No LinkedIn authorization. Run /linkedin-publish setup.")
     data = json.loads(raw)
-    if int(data["expires_at"]) <= int(time.time()):
+    seconds_left = int(data["expires_at"]) - int(time.time())
+    if seconds_left <= 0:
         sys.exit("LinkedIn authorization expired. Run /linkedin-publish setup.")
+    if with_expiry:
+        return str(data["access_token"]), seconds_left // 86400
     return str(data["access_token"])
 
 
@@ -52,9 +55,27 @@ def api(path: str, access_token: str, payload=None):
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--text-file", required=True)
+    parser.add_argument("--text-file")
     parser.add_argument("--i-am-approved", action="store_true")
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="verify authorization and print the member id; publishes nothing",
+    )
     args = parser.parse_args()
+
+    if args.check:
+        access_token, days_left = token(with_expiry=True)
+        _, _, profile = api("/v2/userinfo", access_token)
+        person = profile.get("sub")
+        if not person:
+            sys.exit("LinkedIn did not return the authenticated member id.")
+        print(f"Authorized as urn:li:person:{person}")
+        print(f"Authorization valid for {days_left} more days.")
+        return 0
+
+    if not args.text_file:
+        sys.exit("--text-file is required unless --check is used.")
     if not args.i_am_approved:
         sys.exit("Refusing to publish without explicit approval.")
 

@@ -69,4 +69,9 @@ else
 fi
 
 echo
-echo "Ready. Start Claude Code and run: /linkedin-today"
+echo "Installed. Restart Claude Code, then run:"
+echo
+echo "    /linkedin-setup"
+echo
+echo "That connects Slack, sets the approver, and authorizes LinkedIn publishing."
+echo "Already set up? Run /linkedin-setup check to verify, or /linkedin-today to write."

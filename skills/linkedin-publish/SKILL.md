@@ -30,6 +30,15 @@ python3 <this-skill-directory>/scripts/linkedin_auth.py
 Supreet completes the consent screen himself. The access token is stored in the macOS keychain, not
 in the repo or content workspace.
 
+5. Confirm it worked without publishing anything:
+
+```bash
+python3 <this-skill-directory>/scripts/linkedin_publish.py --check
+```
+
+This prints the authorized member id and the days remaining. The authorization lasts about 60 days;
+when it lapses, repeat step 4.
+
 ## Publish
 
 1. Select the named draft, or newest file with `status: draft` from
